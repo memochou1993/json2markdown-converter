@@ -1,5 +1,5 @@
 {
-  "name": "json2markdown2html",
+  "name": "json2markdown2-renderer",
   "private": true,
   "version": "0.0.0",
   "type": "module",

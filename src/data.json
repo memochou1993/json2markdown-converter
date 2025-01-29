@@ -1,5 +1,5 @@
 {
-  "html": "<a onmouseover=\"alert('XSS Attack!')\" target=\"_blank\" href=\"https://github.com/memochou1993\">Hover me!</a>",
+  "repository": "<a onmouseover=\"alert('XSS Attack!')\" target=\"_blank\" href=\"https://github.com/memochou1993/json2markdown-renderer\">Visit GitHub</a>",
   "heading_1": "Hello, World!",
   "nested": {
     "heading_2": "Hello, World!",
@@ -16,7 +16,7 @@
       }
     }
   },
-  "table": [
+  "json_table": [
     {
       "id": 1,
       "name": "Alice",
@@ -45,11 +45,13 @@
       "friends": []
     }
   ],
-  "list": [
+  "json_list": [
     "foo",
     "bar",
     "baz"
   ],
+  "markdown_link": "[GitHub](https://github.com/memochou1993)",
   "markdown_code": "```\nconsole.log('Hello, World!');\n```",
-  "markdown_table": "| foo | bar | baz |\n| --- | --- | --- |\n| 1 | 2 | 3 |"
+  "markdown_table": "| foo | bar | baz |\n| --- | --- | --- |\n| 1 | 2 | 3 |",
+  "markdown_image": "![Memo Chou](https://github.com/memochou1993.png?size=200)"
 }
