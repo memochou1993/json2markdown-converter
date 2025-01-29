@@ -7,7 +7,26 @@
     <title>JSON2Markdown2HTML</title>
   </head>
   <body>
-    <div id="app"></div>
+    <header>
+      JSON2Markdown2HTML
+      <div>
+        <select id="view-mode">
+          <option value="html">HTML</option>
+          <option value="markdown">Markdown</option>
+        </select>
+        <select id="html-mode">
+          <option value="sanitized">Sanitized</option>
+          <option value="unsanitized">Unsanitized</option>
+        </select>
+      </div>
+    </header>
+    <main>
+      <div class="container">
+        <div id="json-view"></div>
+        <div id="markdown-view" hidden></div>
+        <div id="html-view"></div>
+      </div>
+    </main>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

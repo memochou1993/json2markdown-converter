@@ -25,15 +25,53 @@ header {
   display: flex;
   font-weight: bold;
   height: 60px;
+  justify-content: space-between;
   padding: 0 1rem;
 }
 
 table {
-  border-collapse: collapse;
+  $border-radius: 0.25rem;
+  $border-style: 1px solid #DDDDDD;
+  background-color: #333333;
+  border-collapse: separate;
+  border-radius: $border-radius;
+  border-spacing: 0;
   width: 100%;
-  th, td {
-    border: 1px solid #DDDDDD;
-    padding: 0.5rem;
+  tr {
+    th, td {
+      border-right: $border-style;
+      max-width: 120px;
+      padding: 0.5rem 1rem;
+    }
+    th {
+      background-color: #222222;
+    }
+    td {
+      border-bottom: $border-style;
+      word-break: break-word;
+    }
+    th:first-child, td:first-child {
+      border-left: $border-style;
+    }
+    &:first-child {
+      th, td {
+        border-top: $border-style;
+      }
+      th:first-child {
+        border-top-left-radius: $border-radius;
+      }
+      th:last-child {
+        border-top-right-radius: $border-radius;
+      }
+    }
+    &:last-child {
+      td:first-child {
+        border-bottom-left-radius: $border-radius;
+      }
+      td:last-child {
+        border-bottom-right-radius: $border-radius;
+      }
+    }
   }
 }
 
@@ -60,6 +98,9 @@ ol, ul {
 
 .container {
   display: flex;
+  > div {
+    height: calc(100dvh - 60px - 1px - 2rem);
+  }
 }
 
 .cm-editor {
@@ -69,19 +110,25 @@ ol, ul {
   }
 }
 
-#json-view {
-  border-right: 1px solid #DDDDDD;
+pre {
+  background-color: #333333;
+  border-radius: 0.25rem;
+  border: 1px solid #DDDDDD;
+  max-width: 100%;
+  overflow: auto;
+  padding: 0.5rem 1rem;
+}
+
+#json-view,
+#markdown-view {
   flex: 1;
-  height: calc(100dvh - 60px - 1px - 2rem);
-  max-width: calc(50% - 1px - 1px);
   overflow: auto;
   padding-bottom: 2rem;
-  padding-right: 1px;
 }
 
 #html-view {
+  border-left: 1px solid #DDDDDD;
   flex: 1;
-  height: calc(100dvh - 60px - 1px - 2rem);
   max-width: calc(50% - 2rem * 2);
   overflow: auto;
   padding-bottom: 2rem;
