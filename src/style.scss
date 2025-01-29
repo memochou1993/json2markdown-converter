@@ -41,9 +41,11 @@ header {
 }
 
 select, button {
-  height: 1.75rem;
-  padding: 0 0.5rem;
+  background-color: $background-color;
+  border-radius: $border-radius;
   cursor: pointer;
+  height: 1.75rem;
+  padding: 0 0.25rem;
 }
 
 a {
@@ -61,44 +63,7 @@ a {
   }
 }
 
-#json-view,
-#markdown-view {
-  flex: 1;
-  overflow: auto;
-  padding-bottom: 2rem;
-
-  .cm-editor {
-    border: none;
-    &.cm-focused .cm-cursor {
-      border-left-color: inherit;
-    }
-  }
-  .cm-foldGutter span {
-    color: $primary-color;
-  }
-  .cm-gutters {
-    background-color: $background-accent-color;
-    border-right: $border-style;
-    color: $text-color;
-  }
-  .cm-matchingBracket {
-    background-color: rgba($primary-color, 1);
-  }
-  .cm-activeLine {
-    background-color: rgba($primary-color, 0.25);
-  }
-  .cm-activeLineGutter {
-    background-color: rgba($primary-color, 0.25);
-  }
-  .cm-line::selection {
-    background-color: rgba($primary-color, 0.75) !important;
-  }
-  .cm-selectionBackground {
-    background-color: rgba($primary-color, 0.25);
-  }
-}
-
-#html-view {
+#preview-view {
   border-left: $border-style;
   flex: 1;
   max-width: calc(50% - 2rem * 2);
@@ -115,6 +80,10 @@ a {
     width: 100%;
 
     tr {
+      transition: background-color 0.1s;
+      &:hover {
+        background-color: $background-color;
+      }
       th, td {
         border-right: $border-style;
         max-width: 120px;
@@ -174,9 +143,8 @@ a {
   }
 
   a {
-    align-items: center;
-    display: flex;
     svg {
+      height: 0.875rem;
       margin-left: 0.25rem;
       width: 0.875rem;
     }
@@ -194,5 +162,48 @@ a {
   img {
     width: 60px;
     border-radius: $border-radius;
+  }
+}
+
+#json-view,
+#html-view,
+#markdown-view {
+  flex: 1;
+  overflow: auto;
+  padding-bottom: 2rem;
+
+  .cm-editor {
+    border: none;
+    &.cm-focused .cm-cursor {
+      border-left-color: inherit;
+    }
+  }
+  .cm-foldGutter span {
+    color: $primary-color;
+  }
+  .cm-gutters {
+    background-color: $background-accent-color;
+    border-right: $border-style;
+    color: $text-color;
+  }
+  .cm-matchingBracket {
+    background-color: $primary-color
+  }
+  .cm-activeLine {
+    background-color: rgba($primary-color, 0.25);
+  }
+  .cm-activeLineGutter {
+    background-color: rgba($primary-color, 0.25);
+  }
+  .cm-line::selection {
+    background-color: rgba($primary-color, 0.75) !important;
+  }
+  .cm-selectionBackground {
+    background-color: rgba($primary-color, 0.25);
+  }
+  .cm-foldPlaceholder {
+    color: $text-color;
+    border-radius: $border-radius;
+    background-color: $primary-color
   }
 }

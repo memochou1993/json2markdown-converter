@@ -11,10 +11,11 @@
       <h1>JSON2Markdown Renderer</h1>
       <div>
         <select id="view-mode">
+          <option value="preview">Preview</option>
           <option value="html">HTML</option>
           <option value="markdown">Markdown</option>
         </select>
-        <select id="html-mode">
+        <select id="sanitize-mode">
           <option value="sanitized">Sanitized</option>
           <option value="unsanitized">Unsanitized</option>
         </select>
@@ -23,8 +24,9 @@
     <main>
       <div class="container">
         <div id="json-view"></div>
+        <div id="preview-view"></div>
+        <div id="html-view" hidden></div>
         <div id="markdown-view" hidden></div>
-        <div id="html-view"></div>
       </div>
     </main>
     <script type="module" src="/src/main.ts"></script>

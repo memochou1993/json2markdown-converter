@@ -12,11 +12,7 @@ const markdownToHTML = (markdown: string, allowedAttributes: string[] = []) => {
       {
         renderer: {
           link({ href, title, text }) {
-            return `
-              <a href="${href}" title="${title || ''}" target="_blank" rel="noopener noreferrer">
-                ${text || href}${href.startsWith('http') && externalLink}
-              </a>
-            `;
+            return `<a href="${href}" title="${title || ''}" target="_blank" rel="noopener noreferrer">${text || href}${href.startsWith('http') && externalLink}</a>`;
           },
         },
       },

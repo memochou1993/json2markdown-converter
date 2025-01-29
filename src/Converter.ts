@@ -1,4 +1,6 @@
+import { html } from '@codemirror/lang-html';
 import { json } from '@codemirror/lang-json';
+import { markdown } from '@codemirror/lang-markdown';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import data from './data.json';
@@ -7,20 +9,23 @@ import { createEditor, jsonToMarkdown, markdownToHTML, safeParseJSON, syncViewSc
 class Converter {
   private jsonView: EditorView;
 
+  private htmlView: EditorView;
+
   private markdownView: EditorView;
 
-  private htmlView: HTMLElement;
+  private previewView: HTMLElement;
 
   private viewModeSelect: HTMLSelectElement;
 
-  private htmlModeSelect: HTMLSelectElement;
+  private sanitizeModeSelect: HTMLSelectElement;
 
   constructor() {
     this.jsonView = this.createJSONEditor();
+    this.htmlView = this.createHTMLEditor();
     this.markdownView = this.createMarkdownEditor();
-    this.htmlView = document.querySelector('#html-view')!;
+    this.previewView = document.querySelector('#preview-view')!;
     this.viewModeSelect = document.querySelector('#view-mode')!;
-    this.htmlModeSelect = document.querySelector('#html-mode')!;
+    this.sanitizeModeSelect = document.querySelector('#sanitize-mode')!;
     this.attachEventListeners();
   }
 
@@ -30,7 +35,19 @@ class Converter {
       JSON.stringify(data, null, 2),
       [
         json(),
-        EditorView.updateListener.of(update => this.handleJSONUpdate(update.state.doc.toString())),
+        EditorView.updateListener.of(() => this.updateViewState()),
+      ],
+    );
+  }
+
+  private createHTMLEditor(): EditorView {
+    return createEditor(
+      document.querySelector('#html-view')!,
+      '',
+      [
+        html(),
+        EditorView.lineWrapping,
+        EditorState.readOnly.of(true),
       ],
     );
   }
@@ -40,34 +57,48 @@ class Converter {
       document.querySelector('#markdown-view')!,
       '',
       [
+        markdown(),
+        EditorView.lineWrapping,
         EditorState.readOnly.of(true),
       ],
     );
   }
 
   private attachEventListeners() {
-    this.syncScroll([
+    this.syncViewScroll([
       this.jsonView.dom.parentElement!,
       this.markdownView.dom.parentElement!,
-      this.htmlView,
+      this.previewView,
     ]);
 
     this.viewModeSelect.addEventListener('change', (event) => {
       const { value } = event.target as HTMLSelectElement;
-      this.htmlView.toggleAttribute('hidden', value !== 'html');
+      this.htmlView.dom.parentElement!.toggleAttribute('hidden', value !== 'html');
       this.markdownView.dom.parentElement!.toggleAttribute('hidden', value !== 'markdown');
-      this.htmlModeSelect.toggleAttribute('hidden', value !== 'html');
+      this.previewView.toggleAttribute('hidden', value !== 'preview');
+      this.sanitizeModeSelect.toggleAttribute('disabled', !['html', 'preview'].includes(value));
     });
 
-    this.htmlModeSelect.addEventListener('change', () => {
-      this.updateHTMLView();
+    this.sanitizeModeSelect.addEventListener('change', () => {
+      this.updateViewState();
     });
   }
 
-  private handleJSONUpdate(str: string) {
-    const obj = safeParseJSON(str);
-    if (!obj) return;
-    const markdown = jsonToMarkdown(obj);
+  private updateViewState() {
+    const data = safeParseJSON(this.jsonView.state.doc.toString());
+    if (!data) return;
+
+    const markdown = jsonToMarkdown(data);
+    const html = markdownToHTML(markdown, this.sanitizeModeSelect.value === 'sanitized' ? ['target'] : ['onmouseover']);
+
+    this.htmlView.dispatch({
+      changes: {
+        from: 0,
+        to: this.htmlView.state.doc.length,
+        insert: html,
+      },
+    });
+
     this.markdownView.dispatch({
       changes: {
         from: 0,
@@ -75,17 +106,11 @@ class Converter {
         insert: markdown,
       },
     });
-    this.updateHTMLView();
+
+    this.previewView.innerHTML = html;
   }
 
-  private updateHTMLView() {
-    const obj = safeParseJSON(this.jsonView.state.doc.toString());
-    if (!obj) return;
-    const markdown = jsonToMarkdown(obj);
-    this.htmlView.innerHTML = markdownToHTML(markdown, this.htmlModeSelect.value === 'sanitized' ? ['target'] : ['onmouseover']);
-  }
-
-  private syncScroll(views: HTMLElement[]) {
+  private syncViewScroll(views: HTMLElement[]) {
     views.forEach((view) => {
       view.addEventListener('scroll', () => syncViewScroll(views, view));
     });

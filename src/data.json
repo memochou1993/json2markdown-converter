@@ -36,7 +36,7 @@
       "friends": [
         "Charlie"
       ],
-      "settings": "{\n\"theme\": \"light\"\n}"
+      "settings": "{\n\"theme\":\"light\"\n}"
     },
     {
       "id": 3,
