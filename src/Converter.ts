@@ -2,7 +2,7 @@ import { json } from '@codemirror/lang-json';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import data from './data.json';
-import { createEditor, jsonToMarkdown, markdownToHTML, safeParseJSON } from './utils';
+import { createEditor, jsonToMarkdown, markdownToHTML, safeParseJSON, syncViewScroll } from './utils';
 
 class Converter {
   private jsonView: EditorView;
@@ -46,6 +46,12 @@ class Converter {
   }
 
   private attachEventListeners() {
+    this.syncScroll([
+      this.jsonView.dom.parentElement!,
+      this.markdownView.dom.parentElement!,
+      this.htmlView,
+    ]);
+
     this.viewModeSelect.addEventListener('change', (event) => {
       const { value } = event.target as HTMLSelectElement;
       this.htmlView.toggleAttribute('hidden', value !== 'html');
@@ -77,6 +83,12 @@ class Converter {
     if (!obj) return;
     const markdown = jsonToMarkdown(obj);
     this.htmlView.innerHTML = markdownToHTML(markdown, this.htmlModeSelect.value === 'sanitized' ? ['target'] : ['onmouseover']);
+  }
+
+  private syncScroll(views: HTMLElement[]) {
+    views.forEach((view) => {
+      view.addEventListener('scroll', () => syncViewScroll(views, view));
+    });
   }
 }
 
