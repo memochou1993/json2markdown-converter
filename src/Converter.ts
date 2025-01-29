@@ -4,7 +4,7 @@ import { markdown } from '@codemirror/lang-markdown';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import data from './data.json';
-import { createEditor, jsonToMarkdown, markdownToHTML, safeParseJSON, syncViewScroll } from './utils';
+import { createEditor, delay, jsonToMarkdown, markdownToHTML, safeParseJSON, syncViewScroll } from './utils';
 
 class Converter {
   private jsonView: EditorView;
@@ -36,6 +36,23 @@ class Converter {
       [
         json(),
         EditorView.updateListener.of(() => this.updateViewState()),
+        EditorView.focusChangeEffect.of((state, focusing) => {
+          if (!focusing) {
+            (async () => {
+              const data = safeParseJSON(state.doc.toString());
+              if (!data) return;
+              await delay(0);
+              this.jsonView.dispatch({
+                changes: {
+                  from: 0,
+                  to: state.doc.length,
+                  insert: JSON.stringify(data, null, 2),
+                },
+              });
+            })();
+          }
+          return null;
+        }),
       ],
     );
   }
