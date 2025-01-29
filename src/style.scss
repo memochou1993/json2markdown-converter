@@ -1,0 +1,90 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: #DDDDDD;
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-size: 1rem;
+  margin: 0;
+}
+
+header {
+  align-items: center;
+  background: #242424;
+  border-bottom: 1px solid #DDDDDD;
+  display: flex;
+  font-weight: bold;
+  height: 60px;
+  padding: 0 1rem;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  th, td {
+    border: 1px solid #DDDDDD;
+    padding: 0.5rem;
+  }
+}
+
+h1 {
+  border-bottom: 1px solid #DDDDDD;
+  padding-bottom: 0.25rem;
+}
+
+@for $i from 1 through 6 {
+  h#{$i} {
+    font-size: 2rem - 0.25rem * ($i - 1);
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+  }
+}
+
+ol, ul {
+  padding-inline-start: 2rem;
+  li {
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+  }
+}
+
+.container {
+  display: flex;
+}
+
+.cm-editor {
+  border: none;
+  &.cm-focused .cm-cursor {
+    border-left-color: inherit;
+  }
+}
+
+#json-view {
+  border-right: 1px solid #DDDDDD;
+  flex: 1;
+  height: calc(100dvh - 60px - 1px - 2rem);
+  max-width: calc(50% - 1px - 1px);
+  overflow: auto;
+  padding-bottom: 2rem;
+  padding-right: 1px;
+}
+
+#html-view {
+  flex: 1;
+  height: calc(100dvh - 60px - 1px - 2rem);
+  max-width: calc(50% - 2rem * 2);
+  overflow: auto;
+  padding-bottom: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}

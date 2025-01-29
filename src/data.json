@@ -1,0 +1,54 @@
+{
+  "heading_1": "Hello, World!",
+  "nested": {
+    "heading_2": "Hello, World!",
+    "nested": {
+      "heading_3": "Hello, World!",
+      "nested": {
+        "heading_4": "Hello, World!",
+        "nested": {
+          "heading_5": "Hello, World!",
+          "nested": {
+            "heading_6": "Hello, World!"
+          }
+        }
+      }
+    }
+  },
+  "table": [
+    {
+      "id": 1,
+      "name": "Alice",
+      "email": "alice@example.com",
+      "friends": [
+        "Bob",
+        "Charlie"
+      ],
+      "settings": {
+        "theme": "dark"
+      }
+    },
+    {
+      "id": 2,
+      "name": "Bob",
+      "email": "bob@example.com",
+      "friends": [
+        "Charlie"
+      ],
+      "settings": "{\n\"theme\": \"light\"\n}"
+    },
+    {
+      "id": 3,
+      "name": "Charlie",
+      "email": "charlie@example.com",
+      "friends": []
+    }
+  ],
+  "list": [
+    "foo",
+    "bar",
+    "baz"
+  ],
+  "markdown_code": "```\nconsole.log('Hello, World!');\n```",
+  "markdown_table": "| foo | bar | baz |\n| --- | --- | --- |\n| 1 | 2 | 3 |"
+}
