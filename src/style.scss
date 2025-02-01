@@ -6,6 +6,7 @@ $border-color: #999999;
 $border-radius: 0.25rem;
 $border-style: 1px solid $border-color;
 $header-height: 60px;
+$toolbar-height: 60px;
 
 :root {
   -moz-osx-font-smoothing: grayscale;
@@ -84,7 +85,7 @@ svg {
   display: flex;
   align-items: center;
   padding: 0.25rem;
-  button {
+  label {
     align-items: center;
     background-color: transparent;
     border-radius: $border-radius;
@@ -92,9 +93,15 @@ svg {
     display: flex;
     height: calc(2rem - 0.25rem * 2 - 2px);
     justify-content: center;
+    padding: 0 0.5rem;
+    transition: background-color 0.25s;
+    cursor: pointer;
+    &:not(:last-child) {
+      margin-right: 2px;
+    }
+    @at-root input:checked + label,
     &:hover {
-      background-color: $text-color;
-      color: $background-color;
+      background-color: $background-accent-color;
     }
   }
 }
@@ -138,34 +145,34 @@ svg {
   }
 }
 
-.panel {
+.pane {
   padding-bottom: 2rem;
   overflow: auto;
-  height: calc(100dvh - $header-height - 1px - 2rem);
+  height: calc(100dvh - $header-height - 1px - $toolbar-height - 1px - 2rem);
 }
 
-.left-panel {
+.pane-left {
   max-width: 80%;
   min-width: 20%;
   width: 50%;
 }
 
-.right-panel {
+.pane-right {
   flex: 1;
 }
 
-.divider {
-  border-left: 2px solid $border-color;
+.splitter {
+  background-color: $border-color;
   cursor: col-resize;
   user-select: none;
-  width: 4px;
+  width: 2px;
   &:hover,
   &.active {
-    border-left-color: $primary-color;
+    background-color: $primary-color;
   }
 }
 
-.preview {
+.markdown {
   padding-left: 2rem;
   padding-right: 2rem;
   table {
@@ -175,9 +182,8 @@ svg {
     border-spacing: 0;
     margin: 1rem 0;
     width: 100%;
-
     tr {
-      transition: background-color 0.1s;
+      transition: background-color 0.25s;
       &:hover {
         background-color: $background-color;
       }

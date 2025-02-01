@@ -1,24 +1,24 @@
-const initResizableDivider = (divider: HTMLElement, mainPanel: HTMLElement) => {
+const initResizableSplitter = (splitter: HTMLElement, mainPane: HTMLElement) => {
   let isResizing = false;
 
-  const handleMouseMove = (e: MouseEvent) => {
+  const handleMouseMove = (event: MouseEvent) => {
     if (!isResizing) return;
-    divider.classList.add('active');
-    mainPanel.style.width = `${e.clientX}px`;
+    splitter.classList.add('active');
+    mainPane.style.width = `${event.clientX}px`;
   };
 
   const handleMouseUp = () => {
     isResizing = false;
-    divider.classList.remove('active');
+    splitter.classList.remove('active');
     document.removeEventListener('mousemove', handleMouseMove);
     document.removeEventListener('mouseup', handleMouseUp);
   };
 
-  divider.addEventListener('mousedown', () => {
+  splitter.addEventListener('mousedown', () => {
     isResizing = true;
     document.addEventListener('mousemove', handleMouseMove);
     document.addEventListener('mouseup', handleMouseUp, { once: true });
   });
 };
 
-export default initResizableDivider;
+export default initResizableSplitter;

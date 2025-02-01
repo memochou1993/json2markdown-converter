@@ -3,10 +3,15 @@ import { json } from '@codemirror/lang-json';
 import { markdown } from '@codemirror/lang-markdown';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
+import { ViewMode } from './constants';
 import data from './data.json';
-import { createEditor, delay, initResizableDivider, jsonToMarkdown, markdownToHTML, safeParseJSON, syncViewScroll } from './utils';
+import { createEditor, delay, initResizableSplitter, jsonToMarkdown, markdownToHTML, safeParseJSON, syncViewScroll } from './utils';
 
+// TODO: rename to Renderer
 class Converter {
+  // TODO:
+  // private jsonView: HTMLDivElement;
+
   private jsonView: EditorView;
 
   private htmlView: EditorView;
@@ -15,18 +20,18 @@ class Converter {
 
   private previewView: HTMLDivElement;
 
-  private viewModeSelect: HTMLSelectElement;
+  private viewModeRadioGroup: HTMLDivElement;
 
-  private sanitizeModeSelect: HTMLSelectElement;
+  private renderModeSelect: HTMLSelectElement;
 
   constructor() {
     this.jsonView = this.createJSONEditor();
     this.htmlView = this.createHTMLEditor();
     this.markdownView = this.createMarkdownEditor();
     this.previewView = document.querySelector('#preview-view')!;
-    this.viewModeSelect = document.querySelector('#view-mode')!;
-    this.sanitizeModeSelect = document.querySelector('#sanitize-mode')!;
-    this.attachEventListeners();
+    this.viewModeRadioGroup = document.querySelector('#view-mode')!;
+    this.renderModeSelect = document.querySelector('#render-mode')!;
+    this.initEventListeners();
   }
 
   private createJSONEditor(): EditorView {
@@ -35,7 +40,7 @@ class Converter {
       JSON.stringify(data, null, 2),
       [
         json(),
-        EditorView.updateListener.of(() => this.updateViewState()),
+        EditorView.updateListener.of(() => this.updateEditorViewState()),
         EditorView.focusChangeEffect.of((state, focusing) => {
           if (!focusing) {
             (async () => {
@@ -81,37 +86,12 @@ class Converter {
     );
   }
 
-  private attachEventListeners() {
-    initResizableDivider(
-      document.querySelector('.divider')!,
-      this.jsonView.dom.parentElement!,
-    );
-
-    this.syncViewScroll([
-      this.jsonView.dom.parentElement!,
-      this.markdownView.dom.parentElement!,
-      this.previewView,
-    ]);
-
-    this.viewModeSelect.addEventListener('change', (event) => {
-      const { value } = event.target as HTMLSelectElement;
-      this.htmlView.dom.parentElement!.toggleAttribute('hidden', value !== 'html');
-      this.markdownView.dom.parentElement!.toggleAttribute('hidden', value !== 'markdown');
-      this.previewView.toggleAttribute('hidden', value !== 'preview');
-      this.sanitizeModeSelect.toggleAttribute('disabled', !['html', 'preview'].includes(value));
-    });
-
-    this.sanitizeModeSelect.addEventListener('change', () => {
-      this.updateViewState();
-    });
-  }
-
-  private updateViewState() {
+  private updateEditorViewState() {
     const data = safeParseJSON(this.jsonView.state.doc.toString());
     if (!data) return;
 
     const markdown = jsonToMarkdown(data);
-    const html = markdownToHTML(markdown, this.sanitizeModeSelect.value === 'sanitized' ? ['target'] : ['onmouseover']);
+    const html = markdownToHTML(markdown, ['target']);
 
     this.htmlView.dispatch({
       changes: {
@@ -132,9 +112,65 @@ class Converter {
     this.previewView.innerHTML = html;
   }
 
-  private syncViewScroll(views: HTMLElement[]) {
+  private initEventListeners() {
+    this.initSplitter();
+    this.initScroller();
+    this.initViewModeRadioGroup();
+    this.initRenderModeSelect();
+  }
+
+  private initSplitter() {
+    initResizableSplitter(document.querySelector('.splitter')!, this.jsonView.dom.parentElement);
+  }
+
+  private initScroller() {
+    const views = [this.jsonView.dom.parentElement!, this.markdownView.dom.parentElement!, this.previewView];
     views.forEach((view) => {
       view.addEventListener('scroll', () => syncViewScroll(views, view));
+    });
+  }
+
+  private initViewModeRadioGroup() {
+    this.viewModeRadioGroup.addEventListener('change', (event: Event) => {
+      const leftPane = document.querySelector<HTMLDivElement>('.pane-left')!;
+      const splitter = document.querySelector<HTMLDivElement>('.splitter')!;
+      const rightPane = document.querySelector<HTMLDivElement>('.pane-right')!;
+      const input = event.target as HTMLInputElement;
+      switch (input.value) {
+        case ViewMode.EDIT:
+          leftPane.toggleAttribute('hidden', false);
+          leftPane.style.width = '100%';
+          leftPane.style.maxWidth = '100%';
+          splitter.hidden = true;
+          rightPane.toggleAttribute('hidden', true);
+          break;
+        case ViewMode.SPLIT:
+          leftPane.toggleAttribute('hidden', false);
+          leftPane.style.width = '50%';
+          leftPane.style.maxWidth = '80%';
+          splitter.hidden = false;
+          rightPane.toggleAttribute('hidden', false);
+          break;
+        case ViewMode.PREVIEW:
+          leftPane.toggleAttribute('hidden', true);
+          splitter.hidden = true;
+          rightPane.toggleAttribute('hidden', false);
+          break;
+      }
+    });
+  }
+
+  private initRenderModeSelect() {
+    this.renderModeSelect.addEventListener('change', (event) => {
+      const { value } = event.target as HTMLSelectElement;
+      this.htmlView.dom.parentElement!.classList.toggle('pane-right', value === 'html');
+      this.markdownView.dom.parentElement!.classList.toggle('pane-right', value === 'markdown');
+      this.previewView.classList.toggle('pane-right', value === 'preview');
+      const viewMode = this.viewModeRadioGroup.querySelector<HTMLInputElement>('input:checked')!.value;
+      if (viewMode === ViewMode.EDIT) return;
+      this.htmlView.dom.parentElement!.toggleAttribute('hidden', value !== 'html');
+      this.markdownView.dom.parentElement!.toggleAttribute('hidden', value !== 'markdown');
+      this.previewView.toggleAttribute('hidden', value !== 'preview');
     });
   }
 }

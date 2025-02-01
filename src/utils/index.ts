@@ -1,7 +1,7 @@
 import createEditor from './create-editor';
 import delay from './delay';
 import highlight from './highlight';
-import initResizableDivider from './init-resizable-divider';
+import initResizableSplitter from './init-resizable-splitter';
 import jsonToMarkdown from './json-to-markdown';
 import markdownToHTML from './markdown-to-html';
 import safeParseJSON from './safe-parse-json';
@@ -12,7 +12,7 @@ export {
   createEditor,
   delay,
   highlight,
-  initResizableDivider,
+  initResizableSplitter,
   jsonToMarkdown,
   markdownToHTML,
   safeParseJSON,
