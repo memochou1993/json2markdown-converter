@@ -5,7 +5,7 @@ import { lintKeymap } from '@codemirror/lint';
 import { EditorState, Extension } from '@codemirror/state';
 import { EditorView, crosshairCursor, drawSelection, dropCursor, highlightActiveLine, highlightActiveLineGutter, highlightSpecialChars, keymap, lineNumbers, rectangularSelection } from '@codemirror/view';
 
-const createEditor = (parent: Element, doc: string = '', extensions: Extension[] = []) => {
+const createEditorView = (parent: Element, doc: string = '', extensions: Extension[] = []) => {
   return new EditorView({
     parent,
     state: EditorState.create({
@@ -42,4 +42,4 @@ const createEditor = (parent: Element, doc: string = '', extensions: Extension[]
   });
 };
 
-export default createEditor;
+export default createEditorView;

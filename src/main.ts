@@ -1,4 +1,4 @@
-import Converter from './Converter';
+import Renderer from './Renderer';
 import './style.scss';
 
-new Converter();
+new Renderer();

@@ -1,4 +1,4 @@
-import createEditor from './create-editor';
+import createEditorView from './create-editor-view';
 import delay from './delay';
 import highlight from './highlight';
 import initResizableSplitter from './init-resizable-splitter';
@@ -9,7 +9,7 @@ import syncViewScroll from './sync-view-scroll';
 import toTitleCase from './to-title-case';
 
 export {
-  createEditor,
+  createEditorView,
   delay,
   highlight,
   initResizableSplitter,

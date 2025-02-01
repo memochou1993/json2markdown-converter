@@ -3,40 +3,48 @@ import { json } from '@codemirror/lang-json';
 import { markdown } from '@codemirror/lang-markdown';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
-import { ViewMode } from './constants';
+import { RenderMode, ViewMode } from './constants';
 import data from './data.json';
-import { createEditor, delay, initResizableSplitter, jsonToMarkdown, markdownToHTML, safeParseJSON, syncViewScroll } from './utils';
+import { createEditorView, delay, initResizableSplitter, jsonToMarkdown, markdownToHTML, safeParseJSON, syncViewScroll } from './utils';
 
-// TODO: rename to Renderer
-class Converter {
-  // TODO:
-  // private jsonView: HTMLDivElement;
-
-  private jsonView: EditorView;
-
-  private htmlView: EditorView;
-
-  private markdownView: EditorView;
+class Renderer {
+  private jsonView: HTMLDivElement;
 
   private previewView: HTMLDivElement;
+
+  private htmlView: HTMLDivElement;
+
+  private markdownView: HTMLDivElement;
 
   private viewModeRadioGroup: HTMLDivElement;
 
   private renderModeSelect: HTMLSelectElement;
 
+  private splitter: HTMLDivElement;
+
+  private jsonEditorView: EditorView;
+
+  private htmlEditorView: EditorView;
+
+  private markdownEditorView: EditorView;
+
   constructor() {
-    this.jsonView = this.createJSONEditor();
-    this.htmlView = this.createHTMLEditor();
-    this.markdownView = this.createMarkdownEditor();
+    this.jsonView = document.querySelector('#json-view')!;
     this.previewView = document.querySelector('#preview-view')!;
+    this.htmlView = document.querySelector('#html-view')!;
+    this.markdownView = document.querySelector('#markdown-view')!;
     this.viewModeRadioGroup = document.querySelector('#view-mode')!;
     this.renderModeSelect = document.querySelector('#render-mode')!;
+    this.splitter = document.querySelector('.splitter')!;
+    this.jsonEditorView = this.createJSONEditorView();
+    this.htmlEditorView = this.createHTMLEditorView();
+    this.markdownEditorView = this.createMarkdownEditorView();
     this.initEventListeners();
   }
 
-  private createJSONEditor(): EditorView {
-    return createEditor(
-      document.querySelector('#json-view')!,
+  private createJSONEditorView(): EditorView {
+    return createEditorView(
+      this.jsonView,
       JSON.stringify(data, null, 2),
       [
         json(),
@@ -47,7 +55,7 @@ class Converter {
               const data = safeParseJSON(state.doc.toString());
               if (!data) return;
               await delay(0);
-              this.jsonView.dispatch({
+              this.jsonEditorView.dispatch({
                 changes: {
                   from: 0,
                   to: state.doc.length,
@@ -62,9 +70,9 @@ class Converter {
     );
   }
 
-  private createHTMLEditor(): EditorView {
-    return createEditor(
-      document.querySelector('#html-view')!,
+  private createHTMLEditorView(): EditorView {
+    return createEditorView(
+      this.htmlView,
       '',
       [
         html(),
@@ -74,9 +82,9 @@ class Converter {
     );
   }
 
-  private createMarkdownEditor(): EditorView {
-    return createEditor(
-      document.querySelector('#markdown-view')!,
+  private createMarkdownEditorView(): EditorView {
+    return createEditorView(
+      this.markdownView,
       '',
       [
         markdown(),
@@ -87,29 +95,29 @@ class Converter {
   }
 
   private updateEditorViewState() {
-    const data = safeParseJSON(this.jsonView.state.doc.toString());
+    const data = safeParseJSON(this.jsonEditorView.state.doc.toString());
     if (!data) return;
 
     const markdown = jsonToMarkdown(data);
     const html = markdownToHTML(markdown, ['target']);
 
-    this.htmlView.dispatch({
+    this.previewView.innerHTML = html;
+
+    this.htmlEditorView.dispatch({
       changes: {
         from: 0,
-        to: this.htmlView.state.doc.length,
+        to: this.htmlEditorView.state.doc.length,
         insert: html,
       },
     });
 
-    this.markdownView.dispatch({
+    this.markdownEditorView.dispatch({
       changes: {
         from: 0,
-        to: this.markdownView.state.doc.length,
+        to: this.markdownEditorView.state.doc.length,
         insert: markdown,
       },
     });
-
-    this.previewView.innerHTML = html;
   }
 
   private initEventListeners() {
@@ -120,11 +128,17 @@ class Converter {
   }
 
   private initSplitter() {
-    initResizableSplitter(document.querySelector('.splitter')!, this.jsonView.dom.parentElement);
+    initResizableSplitter(this.splitter, this.jsonView);
   }
 
   private initScroller() {
-    const views = [this.jsonView.dom.parentElement!, this.markdownView.dom.parentElement!, this.previewView];
+    const views = [
+      this.jsonView,
+      this.previewView,
+      this.htmlView,
+      this.markdownView,
+    ];
+
     views.forEach((view) => {
       view.addEventListener('scroll', () => syncViewScroll(views, view));
     });
@@ -132,9 +146,9 @@ class Converter {
 
   private initViewModeRadioGroup() {
     this.viewModeRadioGroup.addEventListener('change', (event: Event) => {
-      const leftPane = document.querySelector<HTMLDivElement>('.pane-left')!;
-      const splitter = document.querySelector<HTMLDivElement>('.splitter')!;
-      const rightPane = document.querySelector<HTMLDivElement>('.pane-right')!;
+      const leftPane = document.querySelector('.pane-left') as HTMLDivElement;
+      const rightPane = document.querySelector('.pane-right') as HTMLDivElement;
+      const splitter = this.splitter;
       const input = event.target as HTMLInputElement;
       switch (input.value) {
         case ViewMode.EDIT:
@@ -151,7 +165,7 @@ class Converter {
           splitter.hidden = false;
           rightPane.toggleAttribute('hidden', false);
           break;
-        case ViewMode.PREVIEW:
+        case ViewMode.VIEW:
           leftPane.toggleAttribute('hidden', true);
           splitter.hidden = true;
           rightPane.toggleAttribute('hidden', false);
@@ -163,16 +177,16 @@ class Converter {
   private initRenderModeSelect() {
     this.renderModeSelect.addEventListener('change', (event) => {
       const { value } = event.target as HTMLSelectElement;
-      this.htmlView.dom.parentElement!.classList.toggle('pane-right', value === 'html');
-      this.markdownView.dom.parentElement!.classList.toggle('pane-right', value === 'markdown');
-      this.previewView.classList.toggle('pane-right', value === 'preview');
-      const viewMode = this.viewModeRadioGroup.querySelector<HTMLInputElement>('input:checked')!.value;
+      this.htmlView.classList.toggle('pane-right', value === RenderMode.HTML);
+      this.markdownView.classList.toggle('pane-right', value === RenderMode.MARKDOWN);
+      this.previewView.classList.toggle('pane-right', value === RenderMode.PREVIEW);
+      const viewMode = (this.viewModeRadioGroup.querySelector('input:checked') as HTMLInputElement).value;
       if (viewMode === ViewMode.EDIT) return;
-      this.htmlView.dom.parentElement!.toggleAttribute('hidden', value !== 'html');
-      this.markdownView.dom.parentElement!.toggleAttribute('hidden', value !== 'markdown');
-      this.previewView.toggleAttribute('hidden', value !== 'preview');
+      this.htmlView.toggleAttribute('hidden', value !== RenderMode.HTML);
+      this.markdownView.toggleAttribute('hidden', value !== RenderMode.MARKDOWN);
+      this.previewView.toggleAttribute('hidden', value !== RenderMode.PREVIEW);
     });
   }
 }
 
-export default Converter;
+export default Renderer;
