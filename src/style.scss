@@ -8,18 +8,16 @@ $border-style: 1px solid $border-color;
 $header-height: 60px;
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  background-color: $background-color;
   color-scheme: light dark;
   color: $text-color;
-  background-color: $background-color;
-
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-synthesis: none;
+  font-weight: 400;
+  line-height: 1.5;
   text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -41,11 +39,12 @@ header {
   }
 }
 
-select, button {
+button,
+select {
   background-color: $background-color;
   border-radius: $border-radius;
   cursor: pointer;
-  height: 1.75rem;
+  height: 2rem;
   padding: 0 0.25rem;
 }
 
@@ -57,8 +56,47 @@ a {
   }
 }
 
-.container {
+svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+.d-flex {
   display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.toolbar {
+  align-items: center;
+  border-bottom: $border-style;
+  display: flex;
+  height: 60px;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+.button-group {
+  border: $border-style;
+  border-radius: $border-radius;
+  display: flex;
+  align-items: center;
+  padding: 0.25rem;
+  button {
+    align-items: center;
+    background-color: transparent;
+    border-radius: $border-radius;
+    border: none;
+    display: flex;
+    height: calc(2rem - 0.25rem * 2 - 2px);
+    justify-content: center;
+    &:hover {
+      background-color: $text-color;
+      color: $background-color;
+    }
+  }
 }
 
 .cm-editor {
@@ -130,7 +168,6 @@ a {
 .preview {
   padding-left: 2rem;
   padding-right: 2rem;
-
   table {
     background-color: $background-accent-color;
     border-collapse: separate;
@@ -180,7 +217,6 @@ a {
       }
     }
   }
-
   @for $i from 1 through 6 {
     h#{$i} {
       font-size: 2rem - 0.25rem * ($i - 1);
@@ -188,12 +224,10 @@ a {
       margin-top: 1rem;
     }
   }
-
   h1 {
     border-bottom: $border-style;
     padding-bottom: 0.25rem;
   }
-
   ol, ul {
     padding-inline-start: 2rem;
     li {
@@ -201,15 +235,11 @@ a {
       margin-top: 0.5rem;
     }
   }
-
   a {
     svg {
-      height: 0.875rem;
       margin-left: 0.25rem;
-      width: 0.875rem;
     }
   }
-
   pre {
     background-color: $background-accent-color;
     border-radius: $border-radius;
@@ -219,7 +249,6 @@ a {
     overflow: auto;
     padding: 0.5rem 1rem;
   }
-
   img {
     width: 60px;
     border-radius: $border-radius;
