@@ -4,7 +4,7 @@ import { markdown } from '@codemirror/lang-markdown';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import data from './data.json';
-import { createEditor, delay, jsonToMarkdown, markdownToHTML, safeParseJSON, syncViewScroll } from './utils';
+import { createEditor, delay, initResizableDivider, jsonToMarkdown, markdownToHTML, safeParseJSON, syncViewScroll } from './utils';
 
 class Converter {
   private jsonView: EditorView;
@@ -13,7 +13,7 @@ class Converter {
 
   private markdownView: EditorView;
 
-  private previewView: HTMLElement;
+  private previewView: HTMLDivElement;
 
   private viewModeSelect: HTMLSelectElement;
 
@@ -82,6 +82,11 @@ class Converter {
   }
 
   private attachEventListeners() {
+    initResizableDivider(
+      document.querySelector('.divider')!,
+      this.jsonView.dom.parentElement!,
+    );
+
     this.syncViewScroll([
       this.jsonView.dom.parentElement!,
       this.markdownView.dom.parentElement!,
