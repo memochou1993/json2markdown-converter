@@ -145,12 +145,21 @@ class Renderer {
   }
 
   private initViewModeRadioGroup() {
-    this.viewModeRadioGroup.addEventListener('change', (event) => {
+    const restoreState = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const mode = [ViewMode.EDIT, ViewMode.VIEW].find(mode => urlParams.has(mode));
+      if (mode) {
+        const input = this.viewModeRadioGroup.querySelector(`input[value="${mode}"]`) as HTMLInputElement;
+        input.checked = true;
+        updateViewMode(mode);
+      }
+    };
+
+    const updateViewMode = (mode: string) => {
       const leftPane = document.querySelector('.pane-left') as HTMLDivElement;
       const rightPane = document.querySelector('.pane-right') as HTMLDivElement;
       const splitter = this.splitter;
-      const input = event.target as HTMLInputElement;
-      switch (input.value) {
+      switch (mode) {
         case ViewMode.EDIT:
           leftPane.toggleAttribute('hidden', false);
           leftPane.style.width = '100%';
@@ -171,6 +180,15 @@ class Renderer {
           rightPane.toggleAttribute('hidden', false);
           break;
       }
+    };
+
+    requestAnimationFrame(restoreState);
+
+    this.viewModeRadioGroup.addEventListener('change', (event) => {
+      const input = event.target as HTMLInputElement;
+      const { value } = input;
+      window.history.replaceState(null, '', value === ViewMode.SPLIT ? window.location.pathname : `?${value}`);
+      updateViewMode(value);
     });
   }
 
@@ -191,9 +209,11 @@ class Renderer {
   private initAnchors() {
     const container = this.previewView;
 
-    requestAnimationFrame(() => {
+    const restoreState = () => {
       scrollToAnchor(window.location.hash, container);
-    });
+    };
+
+    requestAnimationFrame(restoreState);
 
     container.addEventListener('click', (event) => {
       const target = event.target as HTMLElement;
