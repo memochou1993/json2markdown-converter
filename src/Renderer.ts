@@ -5,7 +5,7 @@ import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { RenderMode, ViewMode } from './constants';
 import data from './data.json';
-import { createEditorView, delay, initResizableSplitter, jsonToMarkdown, markdownToHTML, safeParseJSON, syncViewScroll } from './utils';
+import { createEditorView, delay, initResizableSplitter, jsonToMarkdown, markdownToHTML, safeParseJSON, scrollToAnchor, syncViewScroll } from './utils';
 
 class Renderer {
   private jsonView: HTMLDivElement;
@@ -39,7 +39,8 @@ class Renderer {
     this.jsonEditorView = this.createJSONEditorView();
     this.htmlEditorView = this.createHTMLEditorView();
     this.markdownEditorView = this.createMarkdownEditorView();
-    this.initEventListeners();
+
+    this.init();
   }
 
   private createJSONEditorView(): EditorView {
@@ -48,7 +49,31 @@ class Renderer {
       JSON.stringify(data, null, 2),
       [
         json(),
-        EditorView.updateListener.of(() => this.updateEditorViewState()),
+        EditorView.updateListener.of(() => {
+          const data = safeParseJSON(this.jsonEditorView.state.doc.toString());
+          if (!data) return;
+
+          const markdown = jsonToMarkdown(data);
+          const html = markdownToHTML(markdown, ['target']);
+
+          this.previewView.innerHTML = `<div class="markdown container">${html}</div>`;
+
+          this.htmlEditorView.dispatch({
+            changes: {
+              from: 0,
+              to: this.htmlEditorView.state.doc.length,
+              insert: html,
+            },
+          });
+
+          this.markdownEditorView.dispatch({
+            changes: {
+              from: 0,
+              to: this.markdownEditorView.state.doc.length,
+              insert: markdown,
+            },
+          });
+        }),
         EditorView.focusChangeEffect.of((state, focusing) => {
           if (!focusing) {
             (async () => {
@@ -94,37 +119,12 @@ class Renderer {
     );
   }
 
-  private updateEditorViewState() {
-    const data = safeParseJSON(this.jsonEditorView.state.doc.toString());
-    if (!data) return;
-
-    const markdown = jsonToMarkdown(data);
-    const html = markdownToHTML(markdown, ['target']);
-
-    this.previewView.innerHTML = `<div class="markdown container">${html}</div>`;
-
-    this.htmlEditorView.dispatch({
-      changes: {
-        from: 0,
-        to: this.htmlEditorView.state.doc.length,
-        insert: html,
-      },
-    });
-
-    this.markdownEditorView.dispatch({
-      changes: {
-        from: 0,
-        to: this.markdownEditorView.state.doc.length,
-        insert: markdown,
-      },
-    });
-  }
-
-  private initEventListeners() {
+  private init() {
     this.initSplitter();
     this.initScroller();
     this.initViewModeRadioGroup();
     this.initRenderModeSelect();
+    this.initAnchors();
   }
 
   private initSplitter() {
@@ -145,7 +145,7 @@ class Renderer {
   }
 
   private initViewModeRadioGroup() {
-    this.viewModeRadioGroup.addEventListener('change', (event: Event) => {
+    this.viewModeRadioGroup.addEventListener('change', (event) => {
       const leftPane = document.querySelector('.pane-left') as HTMLDivElement;
       const rightPane = document.querySelector('.pane-right') as HTMLDivElement;
       const splitter = this.splitter;
@@ -185,6 +185,25 @@ class Renderer {
       this.htmlView.toggleAttribute('hidden', value !== RenderMode.HTML);
       this.markdownView.toggleAttribute('hidden', value !== RenderMode.MARKDOWN);
       this.previewView.toggleAttribute('hidden', value !== RenderMode.PREVIEW);
+    });
+  }
+
+  private initAnchors() {
+    const container = this.previewView;
+
+    requestAnimationFrame(() => {
+      scrollToAnchor(window.location.hash, container);
+    });
+
+    container.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+      if (target.tagName !== 'A' || !target.hasAttribute('href')) return;
+      const href = target.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        event.preventDefault();
+        history.replaceState(null, '', href);
+        scrollToAnchor(href, container);
+      }
     });
   }
 }

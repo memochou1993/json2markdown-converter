@@ -5,7 +5,9 @@ import initResizableSplitter from './init-resizable-splitter';
 import jsonToMarkdown from './json-to-markdown';
 import markdownToHTML from './markdown-to-html';
 import safeParseJSON from './safe-parse-json';
+import scrollToAnchor from './scroll-to-anchor';
 import syncViewScroll from './sync-view-scroll';
+import toKebabCase from './to-kebab-case';
 import toTitleCase from './to-title-case';
 
 export {
@@ -16,6 +18,8 @@ export {
   jsonToMarkdown,
   markdownToHTML,
   safeParseJSON,
+  scrollToAnchor,
   syncViewScroll,
+  toKebabCase,
   toTitleCase,
 };

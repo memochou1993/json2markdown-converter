@@ -199,6 +199,18 @@ svg {
 .markdown {
   padding-left: 2rem;
   padding-right: 2rem;
+  .anchor {
+    margin-left: -1.25rem;
+    display: flex;
+    align-items: center;
+    svg {
+      margin-right: 0.25rem;
+      visibility: hidden;
+      @at-root .anchor:hover svg {
+        visibility: visible;
+      }
+    }
+  }
   table {
     background-color: $background-accent-color;
     border-collapse: separate;
@@ -265,9 +277,11 @@ svg {
       margin-top: 0.5rem;
     }
   }
-  a {
-    svg {
-      margin-left: 0.25rem;
+  p {
+    a {
+      svg {
+        margin-left: 0.25rem;
+      }
     }
   }
   pre {
