@@ -1,3 +1,18 @@
+@use "sass:map";
+
+$breakpoints: (
+  sm: 600px,
+  md: 960px,
+  lg: 1280px,
+  xl: 1920px,
+);
+
+$container-max-width: (
+  md: 600px,
+  lg: 960px,
+  xl: 1280px,
+);
+
 $primary-color: #EA80FC;
 $text-color: #DDDDDD;
 $background-color: #222222;
@@ -60,6 +75,15 @@ a {
 svg {
   height: 1rem;
   width: 1rem;
+}
+
+.container {
+  margin: 0 auto;
+  @each $key, $value in $breakpoints {
+    @media (min-width: $value) {
+      max-width: map.get($container-max-width, $key);
+    }
+  }
 }
 
 .d-flex {

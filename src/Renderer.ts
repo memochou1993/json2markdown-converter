@@ -101,7 +101,7 @@ class Renderer {
     const markdown = jsonToMarkdown(data);
     const html = markdownToHTML(markdown, ['target']);
 
-    this.previewView.innerHTML = html;
+    this.previewView.innerHTML = `<div class="markdown container">${html}</div>`;
 
     this.htmlEditorView.dispatch({
       changes: {
