@@ -6,6 +6,7 @@ import jsonToMarkdown from './json-to-markdown';
 import markdownToHTML from './markdown-to-html';
 import safeParseJSON from './safe-parse-json';
 import scrollToAnchor from './scroll-to-anchor';
+import scrollToTOCAnchor from './scroll-to-toc-anchor';
 import syncViewScroll from './sync-view-scroll';
 import toKebabCase from './to-kebab-case';
 import toTitleCase from './to-title-case';
@@ -19,6 +20,7 @@ export {
   markdownToHTML,
   safeParseJSON,
   scrollToAnchor,
+  scrollToTOCAnchor,
   syncViewScroll,
   toKebabCase,
   toTitleCase,

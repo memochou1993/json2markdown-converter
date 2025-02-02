@@ -1,15 +1,15 @@
-const scrollToAnchor = (target: string, container: HTMLElement) => {
-  if (!target) return;
+const scrollToAnchor = (hash: string, container: HTMLElement) => {
+  if (!hash) return;
 
-  const targetElement = document.querySelector(target);
+  const targetElement = document.querySelector(hash);
   if (!targetElement) return;
 
   const containerRect = container.getBoundingClientRect();
-  const elementRect = targetElement.getBoundingClientRect();
-  const elementPosition = elementRect.top - containerRect.top + container.scrollTop;
+  const targetRect = targetElement.getBoundingClientRect();
+  const targetPosition = targetRect.top - containerRect.top + container.scrollTop;
 
   container.scrollTo({
-    top: elementPosition,
+    top: targetPosition,
     behavior: 'smooth',
   });
 };

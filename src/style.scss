@@ -185,6 +185,12 @@ svg {
   flex: 1;
 }
 
+.pane-paired {
+  .table-of-contents {
+    display: none;
+  }
+}
+
 .splitter {
   background-color: $border-color;
   cursor: col-resize;
@@ -199,18 +205,6 @@ svg {
 .markdown {
   padding-left: 2rem;
   padding-right: 2rem;
-  .anchor {
-    margin-left: -1.25rem;
-    display: flex;
-    align-items: center;
-    svg {
-      margin-right: 0.25rem;
-      visibility: hidden;
-      @at-root .anchor:hover svg {
-        visibility: visible;
-      }
-    }
-  }
   table {
     background-color: $background-accent-color;
     border-collapse: separate;
@@ -296,5 +290,63 @@ svg {
   img {
     width: 60px;
     border-radius: $border-radius;
+  }
+  .anchor {
+    margin-left: -1.25rem;
+    display: flex;
+    align-items: center;
+    svg {
+      margin-right: 0.25rem;
+      visibility: hidden;
+      @at-root .anchor:hover svg {
+        visibility: visible;
+      }
+    }
+  }
+  .table-of-contents {
+    $font-size: 0.875rem;
+    background-color: $background-accent-color;
+    border-radius: $border-radius;
+    border: $border-style;
+    font-size: $font-size;
+    max-height: 50dvh;
+    max-width: 300px;
+    overflow: auto;
+    padding: 1rem;
+    position: fixed;
+    top: calc($header-height + 1px + $toolbar-height + 1px + 2rem);
+    @each $key, $value in $breakpoints {
+      @media (min-width: $value) {
+        $container-width: map.get($container-max-width, $key);
+        @if $container-width != null {
+          right: calc((100dvw + $container-width) / 2 + 2rem);
+          width: calc((100dvw - $container-width) / 2 - 2rem * 2 - 1rem * 2 - 2px);
+        }
+      }
+    }
+    @media screen and (max-width: map.get($container-max-width, lg)) {
+      display: none;
+    }
+    ul {
+      list-style: none;
+      margin: 0;
+      padding-inline-start: $font-size;
+      &:first-child {
+        padding-inline-start: 0;
+      }
+    }
+    li {
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      a {
+        color: $text-color;
+      }
+      &.active > a,
+      a:hover {
+        color: $primary-color;
+      }
+    }
   }
 }

@@ -5,7 +5,7 @@ import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { RenderMode, ViewMode } from './constants';
 import data from './data.json';
-import { createEditorView, delay, initResizableSplitter, jsonToMarkdown, markdownToHTML, safeParseJSON, scrollToAnchor, syncViewScroll } from './utils';
+import { createEditorView, delay, initResizableSplitter, jsonToMarkdown, markdownToHTML, safeParseJSON, scrollToAnchor, scrollToTOCAnchor, syncViewScroll } from './utils';
 
 class Renderer {
   private jsonView: HTMLDivElement;
@@ -28,6 +28,8 @@ class Renderer {
 
   private markdownEditorView: EditorView;
 
+  private toc!: HTMLDivElement;
+
   constructor() {
     this.jsonView = document.querySelector('#json-view')!;
     this.previewView = document.querySelector('#preview-view')!;
@@ -40,7 +42,10 @@ class Renderer {
     this.htmlEditorView = this.createHTMLEditorView();
     this.markdownEditorView = this.createMarkdownEditorView();
 
-    this.init();
+    requestAnimationFrame(() => {
+      this.toc = document.querySelector('.table-of-contents')!;
+      this.init();
+    });
   }
 
   private createJSONEditorView(): EditorView {
@@ -73,6 +78,8 @@ class Renderer {
               insert: markdown,
             },
           });
+
+          this.toc = document.querySelector('.table-of-contents')!;
         }),
         EditorView.focusChangeEffect.of((state, focusing) => {
           if (!focusing) {
@@ -164,25 +171,31 @@ class Renderer {
           leftPane.toggleAttribute('hidden', false);
           leftPane.style.width = '100%';
           leftPane.style.maxWidth = '100%';
+          leftPane.classList.toggle('pane-paired', false);
           splitter.hidden = true;
           rightPane.toggleAttribute('hidden', true);
+          rightPane.classList.toggle('pane-paired', false);
           break;
         case ViewMode.SPLIT:
           leftPane.toggleAttribute('hidden', false);
           leftPane.style.width = '50%';
           leftPane.style.maxWidth = '80%';
+          leftPane.classList.toggle('pane-paired', true);
           splitter.hidden = false;
           rightPane.toggleAttribute('hidden', false);
+          rightPane.classList.toggle('pane-paired', true);
           break;
         case ViewMode.VIEW:
           leftPane.toggleAttribute('hidden', true);
+          leftPane.classList.toggle('pane-paired', false);
           splitter.hidden = true;
           rightPane.toggleAttribute('hidden', false);
+          rightPane.classList.toggle('pane-paired', false);
           break;
       }
     };
 
-    requestAnimationFrame(restoreState);
+    restoreState();
 
     this.viewModeRadioGroup.addEventListener('change', (event) => {
       const input = event.target as HTMLInputElement;
@@ -207,23 +220,22 @@ class Renderer {
   }
 
   private initAnchors() {
-    const container = this.previewView;
-
     const restoreState = () => {
-      scrollToAnchor(window.location.hash, container);
+      scrollToAnchor(window.location.hash, this.previewView);
+      scrollToTOCAnchor(window.location.hash, this.toc);
     };
 
-    requestAnimationFrame(restoreState);
+    restoreState();
 
-    container.addEventListener('click', (event) => {
-      const target = event.target as HTMLElement;
-      if (target.tagName !== 'A' || !target.hasAttribute('href')) return;
-      const href = target.getAttribute('href');
-      if (href && href.startsWith('#')) {
-        event.preventDefault();
-        history.replaceState(null, '', href);
-        scrollToAnchor(href, container);
-      }
+    this.previewView.addEventListener('click', (event) => {
+      const anchor = (event.target as HTMLElement).closest('a');
+      if (!anchor) return;
+      const href = anchor.getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+      event.preventDefault();
+      history.replaceState(null, '', href);
+      scrollToAnchor(href, this.previewView);
+      scrollToTOCAnchor(href, this.toc);
     });
   }
 }
