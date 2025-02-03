@@ -328,12 +328,11 @@ svg {
       display: none;
     }
     ul {
-      list-style: none;
       margin: 0;
       padding-inline-start: $font-size;
-      &:first-child {
-        padding-inline-start: 0;
-      }
+    }
+    > ul {
+      padding-inline-start: 0;
     }
     li {
       margin: 0;
@@ -346,6 +345,9 @@ svg {
       &.active > a,
       a:hover {
         color: $primary-color;
+      }
+      :not(.expanded, .active) > ul {
+        display: none;
       }
     }
   }

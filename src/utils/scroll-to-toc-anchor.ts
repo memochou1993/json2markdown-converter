@@ -1,15 +1,22 @@
 const scrollToTOCAnchor = (hash: string, container: HTMLElement) => {
   if (!hash) return;
 
-  container.querySelectorAll('a').forEach((link) => {
-    link.parentElement?.classList.toggle('active', link.getAttribute('href') === hash);
+  container.querySelectorAll('li').forEach((listItem) => {
+    listItem.classList.remove('active', 'expanded');
   });
 
-  const links = container.querySelectorAll('li');
-  const activeLink = Array.from(links).find(item => item.querySelector('a')?.getAttribute('href') === hash);
-  if (!activeLink) return;
+  const activeAnchor = container.querySelector(`a[href="${hash}"]`) as HTMLAnchorElement;
+  if (!activeAnchor) return;
 
-  const targetPosition = activeLink.offsetTop - (container.offsetHeight / 2) + (activeLink.offsetHeight / 2);
+  const listItem = activeAnchor.closest('li');
+  if (listItem) {
+    listItem.classList.add('active');
+    for (let parent = listItem.closest('li')?.parentElement?.closest('li'); parent; parent = parent.parentElement?.closest('li')) {
+      parent.classList.add('expanded');
+    }
+  }
+
+  const targetPosition = activeAnchor.offsetTop - (container.offsetHeight / 2) + (activeAnchor.offsetHeight / 2);
 
   container.scrollTo({
     top: targetPosition,
