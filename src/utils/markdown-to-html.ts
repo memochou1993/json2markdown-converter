@@ -60,7 +60,7 @@ const markdownToHTML = (markdown: string, allowedAttributes: string[] = []) => {
           },
           link(link) {
             const { href, title, text } = link;
-            return `<a href="${href}" title="${title || ''}" target="_blank" rel="noopener noreferrer">${text || href}${href.startsWith('http') && externalLinkImage}</a>`;
+            return `<a href="${href}" title="${title || ''}" target="_blank" rel="noopener noreferrer">${text || href}${href.startsWith('http') ? externalLinkImage : ''}</a>`;
           },
         },
       },
