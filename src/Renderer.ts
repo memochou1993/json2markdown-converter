@@ -1,6 +1,7 @@
 import { html } from '@codemirror/lang-html';
-import { json } from '@codemirror/lang-json';
+import { json, jsonParseLinter } from '@codemirror/lang-json';
 import { markdown } from '@codemirror/lang-markdown';
+import { linter } from '@codemirror/lint';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { RenderMode, ViewMode } from './constants';
@@ -54,6 +55,7 @@ class Renderer {
       JSON.stringify(data, null, 2),
       [
         json(),
+        linter(jsonParseLinter()),
         EditorView.updateListener.of(() => {
           const data = safeParseJSON(this.jsonEditorView.state.doc.toString());
           if (!data) return;
