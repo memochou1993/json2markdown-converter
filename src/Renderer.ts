@@ -5,7 +5,7 @@ import { linter } from '@codemirror/lint';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { RenderMode, ViewMode } from './constants';
-import data from './data.json';
+import doc from './doc.json';
 import { createEditorView, delay, initResizableSplitter, jsonToMarkdown, markdownToHTML, safeParseJSON, scrollToAnchor, scrollToTOCAnchor, syncViewScroll, useLeaveConfirmation } from './utils';
 
 class Renderer {
@@ -52,7 +52,7 @@ class Renderer {
   private createJSONEditorView(): EditorView {
     return createEditorView(
       this.jsonView,
-      JSON.stringify(data, null, 2),
+      JSON.stringify(doc, null, 2),
       [
         json(),
         linter(jsonParseLinter()),
