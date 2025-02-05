@@ -287,6 +287,12 @@ svg {
     overflow: auto;
     padding: 0.5rem 1rem;
   }
+  code {
+    background-color: $background-accent-color;
+    border-radius: $border-radius;
+    padding: 0.25rem;
+    word-break: break-all;
+  }
   img {
     width: 60px;
     border-radius: $border-radius;

@@ -10,6 +10,7 @@ import scrollToTOCAnchor from './scroll-to-toc-anchor';
 import syncViewScroll from './sync-view-scroll';
 import toKebabCase from './to-kebab-case';
 import toTitleCase from './to-title-case';
+import useLeaveConfirmation from './use-leave-confirmation';
 
 export {
   createEditorView,
@@ -24,4 +25,5 @@ export {
   syncViewScroll,
   toKebabCase,
   toTitleCase,
+  useLeaveConfirmation,
 };

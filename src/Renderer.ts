@@ -5,7 +5,7 @@ import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { RenderMode, ViewMode } from './constants';
 import data from './data.json';
-import { createEditorView, delay, initResizableSplitter, jsonToMarkdown, markdownToHTML, safeParseJSON, scrollToAnchor, scrollToTOCAnchor, syncViewScroll } from './utils';
+import { createEditorView, delay, initResizableSplitter, jsonToMarkdown, markdownToHTML, safeParseJSON, scrollToAnchor, scrollToTOCAnchor, syncViewScroll, useLeaveConfirmation } from './utils';
 
 class Renderer {
   private jsonView: HTMLDivElement;
@@ -127,11 +127,18 @@ class Renderer {
   }
 
   private init() {
+    this.initLeaveConfirmation();
     this.initSplitter();
     this.initScroller();
     this.initViewModeRadioGroup();
     this.initRenderModeSelect();
     this.initAnchors();
+  }
+
+  private initLeaveConfirmation() {
+    if (process.env.NODE_ENV !== 'development') {
+      useLeaveConfirmation();
+    }
   }
 
   private initSplitter() {
