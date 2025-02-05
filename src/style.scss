@@ -167,6 +167,9 @@ svg {
   .cm-selectionBackground {
     background-color: rgba($primary-color, 0.25);
   }
+  .cm-tooltip-lint {
+    background-color: $background-accent-color;
+  }
 }
 
 .pane {
@@ -206,7 +209,6 @@ svg {
   padding-left: 2rem;
   padding-right: 2rem;
   table {
-    background-color: $background-accent-color;
     border-collapse: separate;
     border-radius: $border-radius;
     border-spacing: 0;
@@ -215,7 +217,7 @@ svg {
     tr {
       transition: background-color 0.25s;
       &:hover {
-        background-color: $background-color;
+        background-color: $background-accent-color;
       }
       th, td {
         border-right: $border-style;
@@ -228,6 +230,13 @@ svg {
       td {
         border-bottom: $border-style;
         word-break: break-word;
+        &:has(pre) {
+          padding: 0;
+          pre {
+            border: 0;
+            margin: 0;
+          }
+        }
       }
       th:first-child, td:first-child {
         border-left: $border-style;
@@ -273,34 +282,40 @@ svg {
   }
   p {
     a {
+      display: inline-block;
       svg {
         margin-left: 0.25rem;
       }
     }
   }
-  pre {
+  > code {
     background-color: $background-accent-color;
+    border-radius: $border-radius;
+    padding: 0.25rem;
+    word-break: break-all;
+  }
+  pre {
     border-radius: $border-radius;
     border: $border-style;
     margin: 1rem 0;
     max-width: 100%;
     overflow: auto;
     padding: 0.5rem 1rem;
-  }
-  code {
-    background-color: $background-accent-color;
-    border-radius: $border-radius;
-    padding: 0.25rem;
-    word-break: break-all;
+    code {
+      background-color: inherit;
+    }
   }
   img {
     width: 60px;
     border-radius: $border-radius;
   }
   .anchor {
-    margin-left: -1.25rem;
-    display: flex;
     align-items: center;
+    color: $text-color;
+    display: flex;
+    margin-left: -1.25rem;
+    text-decoration: none;
+    width: fit-content;
     svg {
       margin-right: 0.25rem;
       visibility: hidden;
