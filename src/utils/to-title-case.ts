@@ -5,6 +5,7 @@ const toTitleCase = (str: unknown) => stryle.toTitleCase(String(str), {
     'HTML',
     'ID$',
     'JSON',
+    'Markdown',
   ],
 });
 
