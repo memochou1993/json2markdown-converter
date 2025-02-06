@@ -2,6 +2,10 @@
 
 JSON2Markdown Renderer is designed to convert JSON data into Markdown, making it especially useful for providing a quick overview or for non-developers to read.
 
+# Demo
+
+[JSON2Markdown Renderer](https://memochou1993.github.io/json2markdown-renderer/)
+
 # How It Works
 
 The conversion process begins by using the [json2markdown](https://github.com/memochou1993/json2markdown) package to parse the JSON data into Markdown, followed by using [markdown2html](https://github.com/memochou1993/markdown2html) to convert the Markdown into sanitized HTML.
@@ -87,5 +91,5 @@ console.log(html);
 
 # License
 
-MIT
+[MIT](https://github.com/memochou1993/json2markdown-renderer/blob/main/LICENSE)
 
