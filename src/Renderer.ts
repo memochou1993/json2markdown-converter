@@ -176,8 +176,8 @@ class Renderer {
       if (mode) {
         const input = this.viewModeRadioGroup.querySelector(`input[value="${mode}"]`) as HTMLInputElement;
         input.checked = true;
-        updateViewMode(mode);
       }
+      updateViewMode(mode || ViewMode.SPLIT);
     };
 
     const updateViewMode = (mode: string) => {
@@ -189,28 +189,25 @@ class Renderer {
           leftPane.toggleAttribute('hidden', false);
           leftPane.style.width = '100%';
           leftPane.style.maxWidth = '100%';
-          leftPane.classList.toggle('pane-paired', false);
           splitter.hidden = true;
           rightPane.toggleAttribute('hidden', true);
-          rightPane.classList.toggle('pane-paired', false);
+          this.toc.style.visibility = 'hidden';
           leaveConfirmation.enable();
           break;
         case ViewMode.SPLIT:
           leftPane.toggleAttribute('hidden', false);
           leftPane.style.width = '50%';
           leftPane.style.maxWidth = '80%';
-          leftPane.classList.toggle('pane-paired', true);
           splitter.hidden = false;
           rightPane.toggleAttribute('hidden', false);
-          rightPane.classList.toggle('pane-paired', true);
+          this.toc.style.visibility = 'hidden';
           leaveConfirmation.enable();
           break;
         case ViewMode.VIEW:
           leftPane.toggleAttribute('hidden', true);
-          leftPane.classList.toggle('pane-paired', false);
           splitter.hidden = true;
           rightPane.toggleAttribute('hidden', false);
-          rightPane.classList.toggle('pane-paired', false);
+          this.toc.style.visibility = 'visible';
           leaveConfirmation.disable();
           break;
       }
