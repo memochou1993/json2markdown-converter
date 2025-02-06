@@ -22,6 +22,9 @@ const jsonToMarkdown = (data: object) => {
           return value;
         });
       }
+      if (element.tag === 'p') {
+        element.value = element.value || '<p>-</p>';
+      }
       return element;
     });
 };
