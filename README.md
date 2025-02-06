@@ -79,7 +79,7 @@ console.log(html);
 
 ## Markdown Image
 
-![Logo](/logo.svg)
+![Logo](https://memochou1993.github.io/json2markdown-renderer/logo.svg)
 
 ## HTML Link
 
