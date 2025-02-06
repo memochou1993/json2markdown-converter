@@ -8,6 +8,8 @@ import { RenderMode, ViewMode } from './constants';
 import doc from './doc.json';
 import { createEditorView, delay, highlight, initResizableSplitter, jsonToMarkdown, markdownToHTML, safeParseJSON, scrollToAnchor, scrollToTOCAnchor, syncViewScroll, useLeaveConfirmation } from './utils';
 
+const leaveConfirmation = useLeaveConfirmation();
+
 class Renderer {
   private jsonView: HTMLDivElement;
 
@@ -147,9 +149,7 @@ class Renderer {
   }
 
   private initLeaveConfirmation() {
-    if (process.env.NODE_ENV !== 'development') {
-      useLeaveConfirmation();
-    }
+    leaveConfirmation.enable();
   }
 
   private initSplitter() {
@@ -193,6 +193,7 @@ class Renderer {
           splitter.hidden = true;
           rightPane.toggleAttribute('hidden', true);
           rightPane.classList.toggle('pane-paired', false);
+          leaveConfirmation.enable();
           break;
         case ViewMode.SPLIT:
           leftPane.toggleAttribute('hidden', false);
@@ -202,6 +203,7 @@ class Renderer {
           splitter.hidden = false;
           rightPane.toggleAttribute('hidden', false);
           rightPane.classList.toggle('pane-paired', true);
+          leaveConfirmation.enable();
           break;
         case ViewMode.VIEW:
           leftPane.toggleAttribute('hidden', true);
@@ -209,6 +211,7 @@ class Renderer {
           splitter.hidden = true;
           rightPane.toggleAttribute('hidden', false);
           rightPane.classList.toggle('pane-paired', false);
+          leaveConfirmation.disable();
           break;
       }
     };
