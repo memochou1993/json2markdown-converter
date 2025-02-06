@@ -6,7 +6,7 @@ import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { RenderMode, ViewMode } from './constants';
 import doc from './doc.json';
-import { createEditorView, delay, initResizableSplitter, jsonToMarkdown, markdownToHTML, safeParseJSON, scrollToAnchor, scrollToTOCAnchor, syncViewScroll, useLeaveConfirmation } from './utils';
+import { createEditorView, delay, highlight, initResizableSplitter, jsonToMarkdown, markdownToHTML, safeParseJSON, scrollToAnchor, scrollToTOCAnchor, syncViewScroll, useLeaveConfirmation } from './utils';
 
 class Renderer {
   private jsonView: HTMLDivElement;
@@ -50,13 +50,21 @@ class Renderer {
   }
 
   private createJSONEditorView(): EditorView {
+    let isFirstUpdate = true;
     return createEditorView(
       this.jsonView,
       JSON.stringify(doc, null, 2),
       [
         json(),
         linter(jsonParseLinter()),
-        EditorView.updateListener.of(() => {
+        EditorView.updateListener.of((update) => {
+          if (!update.docChanged && !isFirstUpdate) {
+            return;
+          }
+          if (isFirstUpdate) {
+            isFirstUpdate = false;
+          }
+
           const data = safeParseJSON(this.jsonEditorView.state.doc.toString());
           if (!data) return;
 
@@ -135,6 +143,7 @@ class Renderer {
     this.initViewModeRadioGroup();
     this.initRenderModeSelect();
     this.initAnchors();
+    this.initTableHighlight();
   }
 
   private initLeaveConfirmation() {
@@ -246,6 +255,11 @@ class Renderer {
       scrollToAnchor(href, this.previewView);
       scrollToTOCAnchor(href, this.toc);
     });
+  }
+
+  private initTableHighlight() {
+    const codeBlocks = document.querySelectorAll('table td pre code');
+    codeBlocks.forEach(block => highlight.highlightElement(block as HTMLElement));
   }
 }
 

@@ -18,31 +18,124 @@
     ],
     "json_array_of_objects": [
       {
-        "id": 1,
-        "name": "Alice",
-        "email": "alice@example.com",
-        "friends": [
-          "Bob",
-          "Charlie"
+        "symbol": "🌑",
+        "name": "New Moon",
+        "description": "A new moon, the first of the eight phases of the moon.",
+        "see_also": [
+          "🌘",
+          "🌒"
         ],
-        "settings": {
-          "theme": "dark"
+        "metadata": {
+          "codepoints": "U+1F311",
+          "shortcodes": [
+            ":new_moon:"
+          ]
         }
       },
       {
-        "id": 2,
-        "name": "Bob",
-        "email": "bob@example.com",
-        "friends": [
-          "Charlie"
+        "symbol": "🌒",
+        "name": "Waxing Crescent Moon",
+        "description": "A waxing crescent moon, the second of the eight phases of the moon.",
+        "see_also": [
+          "🌑",
+          "🌓"
         ],
-        "settings": "{\n\"theme\":\"light\"\n}"
+        "metadata": {
+          "codepoints": "U+1F312",
+          "shortcodes": [
+            ":waxing_crescent_moon:"
+          ]
+        }
       },
       {
-        "id": 3,
-        "name": "Charlie",
-        "email": "charlie@example.com",
-        "friends": []
+        "symbol": "🌓",
+        "name": "First Quarter Moon",
+        "description": "A first quarter moon, the third of the eight phases of the moon.",
+        "see_also": [
+          "🌒",
+          "🌔"
+        ],
+        "metadata": {
+          "codepoints": "U+1F313",
+          "shortcodes": [
+            ":first_quarter_moon:"
+          ]
+        }
+      },
+      {
+        "symbol": "🌔",
+        "name": "Waxing Gibbous Moon",
+        "description": "A waxing gibbous moon, the fourth of the eight phases of the moon.",
+        "see_also": [
+          "🌓",
+          "🌕"
+        ],
+        "metadata": {
+          "codepoints": "U+1F314",
+          "shortcodes": [
+            ":waxing_gibbous_moon:"
+          ]
+        }
+      },
+      {
+        "symbol": "🌕",
+        "name": "Full Moon",
+        "description": "A full moon, the fifth of the eight phases of the moon.",
+        "see_also": [
+          "🌔",
+          "🌖"
+        ],
+        "metadata": {
+          "codepoints": "U+1F315",
+          "shortcodes": [
+            ":full_moon:"
+          ]
+        }
+      },
+      {
+        "symbol": "🌖",
+        "name": "Waning Gibbous Moon",
+        "description": "A waning gibbous moon, the sixth of the eight phases of the moon.",
+        "see_also": [
+          "🌕",
+          "🌗"
+        ],
+        "metadata": {
+          "codepoints": "U+1F316",
+          "shortcodes": [
+            ":waning_gibbous_moon:"
+          ]
+        }
+      },
+      {
+        "symbol": "🌗",
+        "name": "Last Quarter Moon",
+        "description": "A last quarter moon, the seventh of the eight phases of the moon.",
+        "see_also": [
+          "🌖",
+          "🌘"
+        ],
+        "metadata": {
+          "codepoints": "U+1F317",
+          "shortcodes": [
+            ":last_quarter_moon:"
+          ]
+        }
+      },
+      {
+        "symbol": "🌘",
+        "name": "Waning Crescent Moon",
+        "description": "A waning crescent moon, the eighth of the eight phases of the moon.",
+        "see_also": [
+          "🌗",
+          "🌑"
+        ],
+        "metadata": {
+          "codepoints": "U+1F318",
+          "shortcodes": [
+            ":waning_crescent_moon:"
+          ]
+        }
       }
     ],
     "markdown_code_block": "```\nimport { Converter as JSONToMarkdownConverter } from '@memochou1993/json2markdown';\nimport { Converter as MarkdownToHTMLConverter } from '@memochou1993/markdown2html';\n\nconst markdown = JSONToMarkdownConverter.toMarkdown({\n  status: '😤',\n});\n\nconst html = MarkdownToHTMLConverter.toHTML(markdown);\n\nconsole.log(html);\n\n// Output:\n// <h1>status</h1>\n// <p>😤</p>\n```",
