@@ -232,6 +232,7 @@ svg {
         word-break: break-word;
         &:has(pre) {
           padding: 0;
+          width: 50%;
           pre {
             border: 0;
             margin: 0;
