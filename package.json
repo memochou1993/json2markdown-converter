@@ -25,6 +25,7 @@
     "@eslint/js": "^9.19.0",
     "@stylistic/eslint-plugin": "^3.0.0",
     "@types/eslint__js": "^8.42.3",
+    "@types/node": "^22.13.1",
     "bun": "^1.2.2",
     "eslint": "^9.19.0",
     "sass-embedded": "^1.83.4",
