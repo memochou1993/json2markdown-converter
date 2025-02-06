@@ -12,9 +12,18 @@
       }
     },
     "json_array": [
-      "Alice",
-      "Bob",
-      "Charlie"
+      "♈ Aries",
+      "♉ Taurus",
+      "♊ Gemini",
+      "♋ Cancer",
+      "♌ Leo",
+      "♍ Virgo",
+      "♎ Libra",
+      "♏ Scorpius",
+      "♐ Sagittarius",
+      "♑ Capricorn",
+      "♒ Aquarius",
+      "♓ Pisces"
     ],
     "json_array_of_objects": [
       {
