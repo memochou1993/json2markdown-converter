@@ -172,12 +172,12 @@ class Renderer {
   private initViewModeRadioGroup() {
     const restoreState = () => {
       const urlParams = new URLSearchParams(window.location.search);
-      const mode = [ViewMode.EDIT, ViewMode.VIEW].find(mode => urlParams.has(mode));
+      const mode = [ViewMode.EDIT, ViewMode.SPLIT].find(mode => urlParams.has(mode));
       if (mode) {
         const input = this.viewModeRadioGroup.querySelector(`input[value="${mode}"]`) as HTMLInputElement;
         input.checked = true;
       }
-      updateViewMode(mode || ViewMode.SPLIT);
+      updateViewMode(mode || ViewMode.VIEW);
     };
 
     const updateViewMode = (mode: string) => {
@@ -218,7 +218,7 @@ class Renderer {
     this.viewModeRadioGroup.addEventListener('change', (event) => {
       const input = event.target as HTMLInputElement;
       const { value } = input;
-      window.history.replaceState(null, '', value === ViewMode.SPLIT ? window.location.pathname : `?${value}`);
+      window.history.replaceState(null, '', value === ViewMode.VIEW ? window.location.pathname : `?${value}`);
       updateViewMode(value);
     });
   }

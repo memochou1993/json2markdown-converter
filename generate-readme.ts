@@ -1,6 +1,6 @@
 import fs from 'fs';
-import doc from './src/doc.json';
-import { jsonToMarkdown } from './src/utils';
+import doc from '~/doc.json';
+import { jsonToMarkdown } from '~/utils';
 
 const markdown = jsonToMarkdown(doc);
 

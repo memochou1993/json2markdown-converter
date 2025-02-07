@@ -16,8 +16,9 @@ const jsonToMarkdown = (data: object) => {
           if (!value) {
             return '-';
           }
-          if (safeParseJSON(value)) {
-            return `<pre><code>${JSON.stringify(safeParseJSON(value), null, 2)}</code></pre>`;
+          const json = safeParseJSON(value);
+          if (json) {
+            return `<pre><code>${JSON.stringify(json, null, 2)}</code></pre>`;
           }
           return value;
         });
