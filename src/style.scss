@@ -128,7 +128,7 @@ svg {
     height: calc(2rem - 0.25rem * 2 - 2px);
     justify-content: center;
     padding: 0 0.5rem;
-    transition: background-color 0.25s;
+    transition: background-color 0.25s ease, transform 0.15s ease;
     cursor: pointer;
     &:not(:last-child) {
       margin-right: 2px;
@@ -136,6 +136,9 @@ svg {
     @at-root input:checked + label,
     &:hover {
       background-color: $background-accent-color;
+    }
+    &:active {
+      transform: scale(0.95);
     }
   }
 }
@@ -220,7 +223,7 @@ svg {
     margin: 1rem 0;
     width: 100%;
     tr {
-      transition: background-color 0.25s;
+      transition: background-color 0.25s ease;
       &:hover {
         background-color: $background-accent-color;
       }
