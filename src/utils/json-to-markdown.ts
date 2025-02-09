@@ -18,7 +18,8 @@ const jsonToMarkdown = (data: object) => {
           }
           const json = safeParseJSON(value);
           if (json) {
-            return `<pre><code>${JSON.stringify(json, null, 2)}</code></pre>`;
+            const escape = (text: string) => text.replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+            return `<pre><code>${escape(JSON.stringify(json, null, 2))}</code></pre>`;
           }
           return value;
         });

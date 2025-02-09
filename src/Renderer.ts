@@ -46,7 +46,6 @@ class Renderer {
     this.markdownEditorView = this.createMarkdownEditorView();
 
     requestAnimationFrame(() => {
-      this.toc = document.querySelector('.table-of-contents')!;
       this.init();
     });
   }
@@ -91,7 +90,8 @@ class Renderer {
             },
           });
 
-          this.toc = document.querySelector('.table-of-contents')!;
+          this.updateTOC();
+          this.highlightTableCodeBlocks();
         }),
         EditorView.focusChangeEffect.of((state, focusing) => {
           if (!focusing) {
@@ -145,7 +145,6 @@ class Renderer {
     this.initViewModeRadioGroup();
     this.initRenderModeSelect();
     this.initAnchors();
-    this.initTableHighlight();
   }
 
   private initLeaveConfirmation() {
@@ -257,7 +256,13 @@ class Renderer {
     });
   }
 
-  private initTableHighlight() {
+  private updateTOC() {
+    this.toc = document.querySelector('.table-of-contents')!;
+    const viewMode = (this.viewModeRadioGroup.querySelector('input:checked') as HTMLInputElement).value;
+    this.toc.style.visibility = viewMode === ViewMode.VIEW ? 'visible' : 'hidden';
+  }
+
+  private highlightTableCodeBlocks() {
     const codeBlocks = document.querySelectorAll('table td pre code');
     codeBlocks.forEach(block => highlight.highlightElement(block as HTMLElement));
   }

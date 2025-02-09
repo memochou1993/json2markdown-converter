@@ -36,6 +36,16 @@ $toolbar-height: 60px;
   text-rendering: optimizeLegibility;
 }
 
+html {
+  box-sizing: border-box;
+}
+
+* {
+  &, &::before, &::after {
+    box-sizing: inherit;
+  }
+}
+
 body {
   font-size: 1rem;
   margin: 0;
@@ -46,7 +56,7 @@ header {
   background-color: $background-color;
   border-bottom: $border-style;
   display: flex;
-  font-weight: bold;
+  font-weight: 700;
   height: $header-height;
   justify-content: space-between;
   padding: 0 1rem;
@@ -202,6 +212,12 @@ svg {
 .markdown {
   padding-left: 2rem;
   padding-right: 2rem;
+  a {
+    display: inline-block;
+    svg {
+      margin-left: 0.25rem;
+    }
+  }
   table {
     border-collapse: separate;
     border-radius: $border-radius;
@@ -229,8 +245,12 @@ svg {
           width: 50%;
           pre {
             border: 0;
+            height: 400px;
             margin: 0;
             padding: 0;
+            code {
+              height: 100%;
+            }
           }
         }
       }
@@ -277,12 +297,6 @@ svg {
     }
   }
   p {
-    a {
-      display: inline-block;
-      svg {
-        margin-left: 0.25rem;
-      }
-    }
     code {
       background-color: $background-accent-color;
       border-radius: $border-radius;
@@ -294,7 +308,7 @@ svg {
     border-radius: $border-radius;
     border: $border-style;
     margin: 1rem 0;
-    max-width: 100%;
+    max-height: 400px;
     overflow: auto;
     padding: 0.5rem 1rem;
     code {
