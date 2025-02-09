@@ -141,10 +141,11 @@ svg {
 }
 
 .cm-editor {
+  background-color: $background-color;
   border: none;
   &.cm-focused {
     .cm-cursor {
-      border-left-color: inherit;
+      border-left-color: $primary-color;
     }
   }
   .cm-activeLine {
@@ -168,14 +169,8 @@ svg {
     border-right: $border-style;
     color: $text-color;
   }
-  .cm-line::selection {
-    background-color: rgba($primary-color, 0.75) !important;
-  }
-  .cm-matchingBracket {
-    background-color: $primary-color
-  }
   .cm-selectionBackground {
-    background-color: rgba($primary-color, 0.25);
+    background-color: rgba($primary-color, 0.25) !important;
   }
   .cm-tooltip-lint {
     background-color: $background-accent-color;

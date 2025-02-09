@@ -3,6 +3,7 @@ import { history, historyKeymap, indentWithTab, standardKeymap } from '@codemirr
 import { bracketMatching, foldGutter, foldKeymap, indentOnInput } from '@codemirror/language';
 import { lintKeymap } from '@codemirror/lint';
 import { EditorState, Extension } from '@codemirror/state';
+import { oneDark } from '@codemirror/theme-one-dark';
 import { EditorView, crosshairCursor, drawSelection, dropCursor, highlightActiveLine, highlightActiveLineGutter, highlightSpecialChars, keymap, lineNumbers, rectangularSelection } from '@codemirror/view';
 
 const createEditorView = (parent: Element, doc: string = '', extensions: Extension[] = []) => {
@@ -35,6 +36,7 @@ const createEditorView = (parent: Element, doc: string = '', extensions: Extensi
           indentWithTab,
         ]),
         lineNumbers(),
+        oneDark,
         rectangularSelection(),
         ...extensions,
       ],
