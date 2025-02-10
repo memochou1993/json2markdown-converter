@@ -10,7 +10,7 @@ const createEditorView = (parent: Element, doc: string = '', extensions: Extensi
   return new EditorView({
     parent,
     state: EditorState.create({
-      doc,
+      doc: doc.endsWith('\n') ? doc : `${doc}\n`,
       extensions: [
         autocompletion(),
         bracketMatching(),

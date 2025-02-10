@@ -183,7 +183,7 @@ svg {
 .pane {
   padding-bottom: 2rem;
   overflow: auto;
-  height: calc(100dvh - $header-height - 1px - $toolbar-height - 1px - 2rem);
+  height: calc(100dvh - $header-height - 1px - $toolbar-height - 1px);
 }
 
 .pane-left {
