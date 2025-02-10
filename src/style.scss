@@ -183,7 +183,7 @@ svg {
 .pane {
   padding-bottom: 2rem;
   overflow: auto;
-  height: calc(100dvh - $header-height - 1px - $toolbar-height - 1px);
+  height: calc(100dvh - $header-height - $toolbar-height);
 }
 
 .pane-left {
@@ -343,13 +343,13 @@ svg {
     overflow: auto;
     padding: 1rem;
     position: fixed;
-    top: calc($header-height + 1px + $toolbar-height + 1px + 2rem);
+    top: calc($header-height + $toolbar-height + 2rem);
     @each $key, $value in $breakpoints {
       @media (min-width: $value) {
         $container-width: map.get($container-max-width, $key);
         @if $container-width != null {
-          right: calc((100dvw + $container-width) / 2 + 2rem);
-          width: calc((100dvw - $container-width) / 2 - 2rem * 2 - 1rem * 2 - 2px);
+          right: calc((100dvw + $container-width) / 2);
+          width: calc((100dvw - $container-width) / 2 - 1rem * 2);
         }
       }
     }
