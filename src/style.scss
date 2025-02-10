@@ -243,9 +243,12 @@ svg {
           width: 50%;
           pre {
             border: 0;
-            height: 400px;
+            height: 200px;
             margin: 0;
+            max-height: none;
+            min-height: 200px;
             padding: 0;
+            resize: vertical;
             code {
               height: 100%;
             }
@@ -306,7 +309,7 @@ svg {
     border-radius: $border-radius;
     border: $border-style;
     margin: 1rem 0;
-    max-height: 400px;
+    max-height: 50dvh;
     overflow: auto;
     padding: 0.5rem 1rem;
     code {
@@ -339,7 +342,7 @@ svg {
     border: $border-style;
     font-size: $font-size;
     max-height: 50dvh;
-    max-width: 300px;
+    max-width: 200px;
     overflow: auto;
     padding: 1rem;
     position: fixed;

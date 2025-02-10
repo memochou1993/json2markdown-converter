@@ -148,7 +148,7 @@
         }
       }
     ],
-    "markdown_code_block": "```js\nimport { Converter as JSONToMarkdownConverter } from '@memochou1993/json2markdown';\nimport { Converter as MarkdownToHTMLConverter } from '@memochou1993/markdown2html';\n\nconst markdown = JSONToMarkdownConverter.toMarkdown({\n  status: '😤',\n});\n\nconst html = MarkdownToHTMLConverter.toHTML(markdown);\n\nconsole.log(html);\n\n// Output:\n// <h1>status</h1>\n// <p>😤</p>\n```",
+    "markdown_code_block": "```js\nimport { Converter as JsonToMarkdownConverter } from '@memochou1993/json2markdown';\nimport { Converter as MarkdownToHtmlConverter } from '@memochou1993/markdown2html';\n\nconst markdown = JsonToMarkdownConverter.toMarkdown({\n  status: '😤',\n});\n\nconst html = MarkdownToHtmlConverter.toHTML(markdown);\n\nconsole.log(html);\n\n// Output:\n// <h1>status</h1>\n// <p>😤</p>\n```",
     "markdown_image": "![Logo](https://memochou1993.github.io/json2markdown-renderer/logo.svg)",
     "html_link": "<a onmouseover=\"alert('XSS Attack will be ineffective!')\" target=\"_blank\" href=\"https://github.com/memochou1993/json2markdown-renderer\">Visit GitHub</a>"
   },
