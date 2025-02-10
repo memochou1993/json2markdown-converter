@@ -2,7 +2,8 @@ import { autocompletion, closeBrackets, closeBracketsKeymap, completionKeymap } 
 import { history, historyKeymap, indentWithTab, standardKeymap } from '@codemirror/commands';
 import { bracketMatching, foldGutter, foldKeymap, indentOnInput } from '@codemirror/language';
 import { lintKeymap } from '@codemirror/lint';
-import { EditorState, Extension } from '@codemirror/state';
+import type { Extension } from '@codemirror/state';
+import { EditorState } from '@codemirror/state';
 import { oneDark } from '@codemirror/theme-one-dark';
 import { EditorView, crosshairCursor, drawSelection, dropCursor, highlightActiveLine, highlightActiveLineGutter, highlightSpecialChars, keymap, lineNumbers, rectangularSelection } from '@codemirror/view';
 
