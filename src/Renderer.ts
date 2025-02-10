@@ -6,7 +6,7 @@ import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import { RenderMode, ViewMode } from './constants';
 import doc from './doc.json';
-import { createEditorView, delay, highlight, initResizableSplitter, jsonToMarkdown, markdownToHTML, safeParseJSON, scrollToAnchor, scrollToTOCAnchor, syncViewScroll, useLeaveConfirmation } from './utils';
+import { createEditorView, delay, highlight, initResizableSplitter, jsonToMarkdown, markdownToHtml, safeParseJson, scrollToAnchor, scrollToTocAnchor, syncViewScroll, useLeaveConfirmation } from './utils';
 
 const leaveConfirmation = useLeaveConfirmation();
 
@@ -41,8 +41,8 @@ class Renderer {
     this.viewModeRadioGroup = document.querySelector('#view-mode')!;
     this.renderModeSelect = document.querySelector('#render-mode')!;
     this.splitter = document.querySelector('.splitter')!;
-    this.jsonEditorView = this.createJSONEditorView();
-    this.htmlEditorView = this.createHTMLEditorView();
+    this.jsonEditorView = this.createJsonEditorView();
+    this.htmlEditorView = this.createHtmlEditorView();
     this.markdownEditorView = this.createMarkdownEditorView();
 
     requestAnimationFrame(() => {
@@ -50,7 +50,7 @@ class Renderer {
     });
   }
 
-  private createJSONEditorView(): EditorView {
+  private createJsonEditorView(): EditorView {
     let isFirstUpdate = true;
     return createEditorView(
       this.jsonView,
@@ -66,11 +66,11 @@ class Renderer {
             isFirstUpdate = false;
           }
 
-          const data = safeParseJSON(this.jsonEditorView.state.doc.toString());
+          const data = safeParseJson(this.jsonEditorView.state.doc.toString());
           if (!data) return;
 
           const markdown = jsonToMarkdown(data);
-          const html = markdownToHTML(markdown, ['target']);
+          const html = markdownToHtml(markdown, ['target']);
 
           this.previewView.innerHTML = `<div class="markdown container">${html}</div>`;
 
@@ -90,13 +90,13 @@ class Renderer {
             },
           });
 
-          this.updateTOC();
+          this.updateToc();
           this.highlightTableCodeBlocks();
         }),
         EditorView.focusChangeEffect.of((state, focusing) => {
           if (!focusing) {
             (async () => {
-              const data = safeParseJSON(state.doc.toString());
+              const data = safeParseJson(state.doc.toString());
               if (!data) return;
               await delay(0);
               this.jsonEditorView.dispatch({
@@ -114,7 +114,7 @@ class Renderer {
     );
   }
 
-  private createHTMLEditorView(): EditorView {
+  private createHtmlEditorView(): EditorView {
     return createEditorView(
       this.htmlView,
       '',
@@ -239,7 +239,7 @@ class Renderer {
   private initAnchors() {
     const restoreState = () => {
       scrollToAnchor(window.location.hash, this.previewView);
-      scrollToTOCAnchor(window.location.hash, this.toc);
+      scrollToTocAnchor(window.location.hash, this.toc);
     };
 
     restoreState();
@@ -252,11 +252,11 @@ class Renderer {
       event.preventDefault();
       history.replaceState(null, '', href);
       scrollToAnchor(href, this.previewView);
-      scrollToTOCAnchor(href, this.toc);
+      scrollToTocAnchor(href, this.toc);
     });
   }
 
-  private updateTOC() {
+  private updateToc() {
     this.toc = document.querySelector('.table-of-contents')!;
     const viewMode = (this.viewModeRadioGroup.querySelector('input:checked') as HTMLInputElement).value;
     this.toc.style.visibility = viewMode === ViewMode.VIEW ? 'visible' : 'hidden';

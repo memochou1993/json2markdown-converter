@@ -1,4 +1,4 @@
-const safeParseJSON = (data: unknown): object | undefined => {
+const safeParseJson = (data: unknown): object | undefined => {
   if (typeof data !== 'string') return;
   try {
     return JSON.parse(data);
@@ -7,4 +7,4 @@ const safeParseJSON = (data: unknown): object | undefined => {
   }
 };
 
-export default safeParseJSON;
+export default safeParseJson;

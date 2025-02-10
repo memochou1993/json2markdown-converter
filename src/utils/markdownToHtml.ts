@@ -4,13 +4,13 @@ import { markedHighlight } from 'marked-highlight';
 import externalLinkImage from '~/assets/external-link.svg?raw';
 import linkImage from '~/assets/link.svg?raw';
 import highlight from './highlight';
-import toKebabCase from './to-kebab-case';
+import toKebabCase from './toKebabCase';
 
 interface HeadingTokenWithId extends Tokens.Heading {
   id: string;
 }
 
-const markdownToHTML = (markdown: string, allowedAttributes: string[] = []) => {
+const markdownToHtml = (markdown: string, allowedAttributes: string[] = []) => {
   const idCounts: Record<string, number> = {};
   const headingTokens: HeadingTokenWithId[] = [];
 
@@ -22,7 +22,7 @@ const markdownToHTML = (markdown: string, allowedAttributes: string[] = []) => {
       {
         hooks: {
           postprocess(html) {
-            const buildTOC = (headingTokens: HeadingTokenWithId[], maxDepth = 6) => {
+            const buildToc = (headingTokens: HeadingTokenWithId[], maxDepth = 6) => {
               const rootList = document.createElement('ul');
               const nestedLists: Record<number, HTMLUListElement> = { 1: rootList };
               let currentDepth = 1;
@@ -43,7 +43,7 @@ const markdownToHTML = (markdown: string, allowedAttributes: string[] = []) => {
               });
               return rootList.outerHTML;
             };
-            return `<div class="table-of-contents">${buildTOC(headingTokens)}</div>${html}`;
+            return `<div class="table-of-contents">${buildToc(headingTokens)}</div>${html}`;
           },
         },
       },
@@ -83,4 +83,4 @@ const markdownToHTML = (markdown: string, allowedAttributes: string[] = []) => {
     .toHTML();
 };
 
-export default markdownToHTML;
+export default markdownToHtml;

@@ -1,4 +1,4 @@
-const scrollToTOCAnchor = (hash: string, container: HTMLElement) => {
+const scrollToTocAnchor = (hash: string, container: HTMLElement) => {
   if (!hash) return;
 
   container.querySelectorAll('li').forEach((listItem) => {
@@ -24,4 +24,4 @@ const scrollToTOCAnchor = (hash: string, container: HTMLElement) => {
   });
 };
 
-export default scrollToTOCAnchor;
+export default scrollToTocAnchor;

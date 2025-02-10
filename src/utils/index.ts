@@ -1,16 +1,16 @@
-import createEditorView from './create-editor-view';
+import createEditorView from './createEditorView';
 import delay from './delay';
 import highlight from './highlight';
-import initResizableSplitter from './init-resizable-splitter';
-import jsonToMarkdown from './json-to-markdown';
-import markdownToHTML from './markdown-to-html';
-import safeParseJSON from './safe-parse-json';
-import scrollToAnchor from './scroll-to-anchor';
-import scrollToTOCAnchor from './scroll-to-toc-anchor';
-import syncViewScroll from './sync-view-scroll';
-import toKebabCase from './to-kebab-case';
-import toTitleCase from './to-title-case';
-import useLeaveConfirmation from './use-leave-confirmation';
+import initResizableSplitter from './initResizableSplitter';
+import jsonToMarkdown from './jsonToMarkdown';
+import markdownToHtml from './markdownToHtml';
+import safeParseJson from './safeParseJson';
+import scrollToAnchor from './scrollToAnchor';
+import scrollToTocAnchor from './scrollToTocAnchor';
+import syncViewScroll from './syncViewScroll';
+import toKebabCase from './toKebabCase';
+import toTitleCase from './toTitleCase';
+import useLeaveConfirmation from './useLeaveConfirmation';
 
 export {
   createEditorView,
@@ -18,10 +18,10 @@ export {
   highlight,
   initResizableSplitter,
   jsonToMarkdown,
-  markdownToHTML,
-  safeParseJSON,
+  markdownToHtml,
+  safeParseJson,
   scrollToAnchor,
-  scrollToTOCAnchor,
+  scrollToTocAnchor,
   syncViewScroll,
   toKebabCase,
   toTitleCase,

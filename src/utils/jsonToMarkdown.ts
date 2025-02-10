@@ -1,6 +1,6 @@
 import { Converter } from '@memochou1993/json2markdown';
-import safeParseJSON from './safe-parse-json';
-import toTitleCase from './to-title-case';
+import safeParseJson from './safeParseJson';
+import toTitleCase from './toTitleCase';
 
 const jsonToMarkdown = (data: object) => {
   return new Converter(data)
@@ -16,7 +16,7 @@ const jsonToMarkdown = (data: object) => {
           if (!value) {
             return '-';
           }
-          const json = safeParseJSON(value);
+          const json = safeParseJson(value);
           if (json) {
             const escape = (text: string) => text.replaceAll('<', '&lt;').replaceAll('>', '&gt;');
             return `<pre><code>${escape(JSON.stringify(json, null, 2))}</code></pre>`;
