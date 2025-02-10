@@ -65,14 +65,14 @@ Hello, World!
 ## Markdown Code Block
 
 ```js
-import { Converter as JSONToMarkdownConverter } from '@memochou1993/json2markdown';
-import { Converter as MarkdownToHTMLConverter } from '@memochou1993/markdown2html';
+import { Converter as JsonToMarkdownConverter } from '@memochou1993/json2markdown';
+import { Converter as MarkdownToHtmlConverter } from '@memochou1993/markdown2html';
 
-const markdown = JSONToMarkdownConverter.toMarkdown({
+const markdown = JsonToMarkdownConverter.toMarkdown({
   status: '😤',
 });
 
-const html = MarkdownToHTMLConverter.toHTML(markdown);
+const html = MarkdownToHtmlConverter.toHTML(markdown);
 
 console.log(html);
 
@@ -92,4 +92,3 @@ console.log(html);
 # License
 
 [MIT](https://github.com/memochou1993/json2markdown-renderer/blob/main/LICENSE)
-
