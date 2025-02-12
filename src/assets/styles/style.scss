@@ -2,20 +2,29 @@
 @use 'variables' as *;
 
 :root {
+  --primary-color: #{$primary-color};
+  --text-color: #{$text-color};
+  --background-color: #{$background-color};
+  --background-accent-color: #{$background-accent-color};
+  --border-color: #{$border-color};
+  --border-radius: #{$border-radius};
+  --border-style: #{$border-style};
+  --header-height: #{$header-height};
+  --toolbar-height: #{$toolbar-height};
+}
+
+html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  background-color: $background-color;
+  background-color: var(--background-color);
+  box-sizing: border-box;
   color-scheme: light dark;
-  color: $text-color;
+  color: var(--text-color);
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-synthesis: none;
   font-weight: 400;
   line-height: 1.5;
   text-rendering: optimizeLegibility;
-}
-
-html {
-  box-sizing: border-box;
 }
 
 * {
@@ -31,11 +40,11 @@ body {
 
 header {
   align-items: center;
-  background-color: $background-color;
-  border-bottom: $border-style;
+  background-color: var(--background-color);
+  border-bottom: var(--border-style);
   display: flex;
   font-weight: 700;
-  height: $header-height;
+  height: var(--header-height);
   justify-content: space-between;
   padding: 0 1rem;
   h1 {
@@ -45,16 +54,16 @@ header {
 
 button,
 select {
-  background-color: $background-color;
-  border-radius: $border-radius;
-  color: $text-color;
+  background-color: var(--background-color);
+  border-radius: var(--border-radius);
+  color: var(--text-color);
   cursor: pointer;
   height: 2rem;
   padding: 0 0.25rem;
 }
 
 a {
-  color: $primary-color;
+  color: var(--primary-color);
   text-decoration: none;
   &:hover {
     text-decoration: underline;
@@ -85,7 +94,7 @@ svg {
 
 .toolbar {
   align-items: center;
-  border-bottom: $border-style;
+  border-bottom: var(--border-style);
   display: flex;
   height: 60px;
   justify-content: space-between;
@@ -93,15 +102,15 @@ svg {
 }
 
 .button-group {
-  border: $border-style;
-  border-radius: $border-radius;
+  border: var(--border-style);
+  border-radius: var(--border-radius);
   display: flex;
   align-items: center;
   padding: 0.25rem;
   label {
     align-items: center;
     background-color: transparent;
-    border-radius: $border-radius;
+    border-radius: var(--border-radius);
     border: none;
     display: flex;
     height: calc(2rem - 0.25rem * 2 - 2px);
@@ -114,7 +123,7 @@ svg {
     }
     @at-root input:checked + label,
     &:hover {
-      background-color: $background-accent-color;
+      background-color: var(--background-accent-color);
     }
     &:active {
       transform: scale(0.95);
@@ -123,46 +132,46 @@ svg {
 }
 
 .cm-editor {
-  background-color: $background-color;
+  background-color: var(--background-color);
   border: none;
   &.cm-focused {
     .cm-cursor {
-      border-left-color: $primary-color;
+      border-left-color: var(--primary-color);
     }
   }
   .cm-activeLine {
-    background-color: rgba($primary-color, 0.25);
+    background-color: rgba(var(--primary-color), 0.25);
   }
   .cm-activeLineGutter {
-    background-color: rgba($primary-color, 0.25);
+    background-color: rgba(var(--primary-color), 0.25);
   }
   .cm-foldGutter {
     span {
-      color: $primary-color;
+      color: var(--primary-color);
     }
   }
   .cm-foldPlaceholder {
-    color: $text-color;
-    border-radius: $border-radius;
-    background-color: $primary-color
+    color: var(--text-color);
+    border-radius: var(--border-radius);
+    background-color: var(--primary-color)
   }
   .cm-gutters {
-    background-color: $background-accent-color;
-    border-right: $border-style;
-    color: $text-color;
+    background-color: var(--background-accent-color);
+    border-right: var(--border-style);
+    color: var(--text-color);
   }
   .cm-selectionBackground {
-    background-color: rgba($primary-color, 0.25) !important;
+    background-color: rgba(var(--primary-color), 0.25) !important;
   }
   .cm-tooltip-lint {
-    background-color: $background-accent-color;
+    background-color: var(--background-accent-color);
   }
 }
 
 .pane {
   padding-bottom: 2rem;
   overflow: auto;
-  height: calc(100dvh - $header-height - $toolbar-height);
+  height: calc(100dvh - var(--header-height) - var(--toolbar-height));
 }
 
 .pane-left {
@@ -176,13 +185,13 @@ svg {
 }
 
 .splitter {
-  background-color: $border-color;
+  background-color: var(--border-color);
   cursor: col-resize;
   user-select: none;
   width: 2px;
   &:hover,
   &.active {
-    background-color: $primary-color;
+    background-color: var(--primary-color);
   }
 }
 
@@ -191,25 +200,25 @@ svg {
   padding-right: 2rem;
   table {
     border-collapse: separate;
-    border-radius: $border-radius;
+    border-radius: var(--border-radius);
     border-spacing: 0;
     margin: 1rem 0;
     width: 100%;
     tr {
       transition: background-color 0.25s ease;
       &:hover {
-        background-color: $background-accent-color;
+        background-color: var(--background-accent-color);
       }
       th, td {
-        border-right: $border-style;
+        border-right: var(--border-style);
         max-width: 120px;
         padding: 0.5rem 1rem;
       }
       th {
-        background-color: $background-color;
+        background-color: var(--background-color);
       }
       td {
-        border-bottom: $border-style;
+        border-bottom: var(--border-style);
         word-break: break-word;
         &:has(pre) {
           padding: 0;
@@ -229,25 +238,25 @@ svg {
         }
       }
       th:first-child, td:first-child {
-        border-left: $border-style;
+        border-left: var(--border-style);
       }
       &:first-child {
         th, td {
-          border-top: $border-style;
+          border-top: var(--border-style);
         }
         th:first-child {
-          border-top-left-radius: $border-radius;
+          border-top-left-radius: var(--border-radius);
         }
         th:last-child {
-          border-top-right-radius: $border-radius;
+          border-top-right-radius: var(--border-radius);
         }
       }
       &:last-child {
         td:first-child {
-          border-bottom-left-radius: $border-radius;
+          border-bottom-left-radius: var(--border-radius);
         }
         td:last-child {
-          border-bottom-right-radius: $border-radius;
+          border-bottom-right-radius: var(--border-radius);
         }
       }
     }
@@ -260,7 +269,7 @@ svg {
     }
   }
   h1 {
-    border-bottom: $border-style;
+    border-bottom: var(--border-style);
     padding-bottom: 0.25rem;
   }
   ol, ul {
@@ -278,15 +287,15 @@ svg {
       }
     }
     code {
-      background-color: $background-accent-color;
-      border-radius: $border-radius;
+      background-color: var(--background-accent-color);
+      border-radius: var(--border-radius);
       padding: 0.25rem;
       word-break: break-all;
     }
   }
   pre {
-    border-radius: $border-radius;
-    border: $border-style;
+    border-radius: var(--border-radius);
+    border: var(--border-style);
     margin: 1rem 0;
     max-height: 50dvh;
     overflow: auto;
@@ -297,11 +306,11 @@ svg {
   }
   img {
     width: 60px;
-    border-radius: $border-radius;
+    border-radius: var(--border-radius);
   }
   .anchor {
     align-items: center;
-    color: $text-color;
+    color: var(--text-color);
     display: flex;
     margin-left: -1.25rem;
     text-decoration: none;
@@ -316,16 +325,16 @@ svg {
   }
   .table-of-contents {
     $font-size: 0.875rem;
-    background-color: $background-accent-color;
-    border-radius: $border-radius;
-    border: $border-style;
+    background-color: var(--background-accent-color);
+    border-radius: var(--border-radius);
+    border: var(--border-style);
     font-size: $font-size;
     max-height: 50dvh;
     max-width: 200px;
     overflow: auto;
     padding: 1rem;
     position: fixed;
-    top: calc($header-height + $toolbar-height + 2rem);
+    top: calc(var(--header-height) + var(--toolbar-height) + 2rem);
     @each $key, $value in $breakpoints {
       @media (min-width: $value) {
         $container-width: map.get($container-max-width, $key);
@@ -351,11 +360,11 @@ svg {
       text-overflow: ellipsis;
       white-space: nowrap;
       a {
-        color: $text-color;
+        color: var(--text-color);
       }
       &.active > a,
       a:hover {
-        color: $primary-color;
+        color: var(--primary-color);
       }
       :not(.expanded, .active) > ul {
         display: none;
