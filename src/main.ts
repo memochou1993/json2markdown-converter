@@ -1,4 +1,4 @@
-import Renderer from './Renderer';
-import './style.scss';
+import '~/assets/styles/style.scss';
+import { Renderer } from '~/renderer';
 
 new Renderer();

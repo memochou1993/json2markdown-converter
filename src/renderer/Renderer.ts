@@ -4,9 +4,9 @@ import { markdown } from '@codemirror/lang-markdown';
 import { linter } from '@codemirror/lint';
 import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
-import { RenderMode, ViewMode } from './constants';
-import doc from './doc.json';
-import { createEditorView, delay, highlight, initResizableSplitter, jsonToMarkdown, markdownToHtml, safeParseJson, scrollToAnchor, scrollToTocAnchor, syncViewScroll, useLeaveConfirmation } from './utils';
+import doc from '~/assets/docs/doc.json';
+import { RenderMode, ViewMode } from '~/constants';
+import { createEditorView, delay, highlight, initResizableSplitter, jsonToMarkdown, markdownToHtml, safeParseJson, scrollToAnchor, scrollToTocAnchor, syncViewScroll, useLeaveConfirmation } from '~/utils';
 
 const leaveConfirmation = useLeaveConfirmation();
 

@@ -1,0 +1,22 @@
+$breakpoints: (
+  sm: 600px,
+  md: 960px,
+  lg: 1280px,
+  xl: 1920px,
+);
+
+$container-max-width: (
+  md: 600px,
+  lg: 960px,
+  xl: 1280px,
+);
+
+$primary-color: #EA80FC;
+$text-color: #DDDDDD;
+$background-color: #222222;
+$background-accent-color: #333333;
+$border-color: #999999;
+$border-radius: 0.25rem;
+$border-style: 1px solid $border-color;
+$header-height: 60px;
+$toolbar-height: 60px;

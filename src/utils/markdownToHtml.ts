@@ -1,8 +1,8 @@
 import { Converter } from '@memochou1993/markdown2html';
 import type { Tokens } from 'marked';
 import { markedHighlight } from 'marked-highlight';
-import externalLinkImage from '~/assets/external-link.svg?raw';
-import linkImage from '~/assets/link.svg?raw';
+import externalLinkImage from '~/assets/icons/external-link.svg?raw';
+import linkImage from '~/assets/icons/link.svg?raw';
 import highlight from './highlight';
 import toKebabCase from './toKebabCase';
 
