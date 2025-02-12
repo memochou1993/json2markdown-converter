@@ -211,12 +211,6 @@ svg {
 .markdown {
   padding-left: 2rem;
   padding-right: 2rem;
-  a {
-    display: inline-block;
-    svg {
-      margin-left: 0.25rem;
-    }
-  }
   table {
     border-collapse: separate;
     border-radius: $border-radius;
@@ -299,6 +293,12 @@ svg {
     }
   }
   p {
+    a {
+      display: inline-block;
+      svg {
+        margin-left: 0.25rem;
+      }
+    }
     code {
       background-color: $background-accent-color;
       border-radius: $border-radius;
