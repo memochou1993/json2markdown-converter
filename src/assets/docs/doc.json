@@ -1,6 +1,6 @@
 {
-  "json2markdown_renderer": "JSON2Markdown Renderer is designed to convert JSON data into Markdown, making it especially useful for providing a quick overview or for non-developers to read.",
-  "demo": "[JSON2Markdown Renderer](https://memochou1993.github.io/json2markdown-renderer/)",
+  "json2markdown_converter": "JSON2Markdown Converter is designed to convert JSON data into Markdown, making it especially useful for providing a quick overview or for non-developers to read.",
+  "demo": "[JSON2Markdown Converter](https://memochou1993.github.io/json2markdown-converter/)",
   "how_it_works": "The conversion process begins by using the [json2markdown](https://github.com/memochou1993/json2markdown) package to parse the JSON data into Markdown, followed by using [markdown2html](https://github.com/memochou1993/markdown2html) to convert the Markdown into sanitized HTML.\n\nIn this process:\n\n- Objects are converted into headings and content.\n- Arrays are converted into lists.\n- Arrays of objects are converted into tables.\n- Markdown content is preserved.\n- HTML content is sanitized.\n\nThe following shows how different types of JSON data appear after being converted into Markdown.",
   "examples": {
     "json_object": {
@@ -149,8 +149,8 @@
       }
     ],
     "markdown_code_block": "```js\nimport { Converter as JsonToMarkdownConverter } from '@memochou1993/json2markdown';\nimport { Converter as MarkdownToHtmlConverter } from '@memochou1993/markdown2html';\n\nconst markdown = JsonToMarkdownConverter.toMarkdown({\n  status: '😤',\n});\n\nconst html = MarkdownToHtmlConverter.toHTML(markdown);\n\nconsole.log(html);\n\n// Output:\n// <h1>status</h1>\n// <p>😤</p>\n```",
-    "markdown_image": "![Logo](https://memochou1993.github.io/json2markdown-renderer/logo.svg)",
-    "html_link": "<a onmouseover=\"alert('XSS Attack will be ineffective!')\" target=\"_blank\" href=\"https://github.com/memochou1993/json2markdown-renderer\">Visit GitHub</a>"
+    "markdown_image": "![Logo](https://memochou1993.github.io/json2markdown-converter/logo.svg)",
+    "html_link": "<a onmouseover=\"alert('XSS Attack will be ineffective!')\" target=\"_blank\" href=\"https://github.com/memochou1993/json2markdown-converter\">Visit GitHub</a>"
   },
-  "license": "[MIT](https://github.com/memochou1993/json2markdown-renderer/blob/main/LICENSE)"
+  "license": "[MIT](https://github.com/memochou1993/json2markdown-converter/blob/main/LICENSE)"
 }

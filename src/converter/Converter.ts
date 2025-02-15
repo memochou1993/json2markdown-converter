@@ -10,7 +10,7 @@ import { createEditorView, delay, highlight, initResizableSplitter, jsonToMarkdo
 
 const leaveConfirmation = useLeaveConfirmation();
 
-class Renderer {
+class Converter {
   private jsonView: HTMLDivElement;
 
   private previewView: HTMLDivElement;
@@ -268,4 +268,4 @@ class Renderer {
   }
 }
 
-export default Renderer;
+export default Converter;

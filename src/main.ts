@@ -1,4 +1,4 @@
 import '~/assets/styles/style.scss';
-import { Renderer } from '~/renderer';
+import { Converter } from '~/converter';
 
-new Renderer();
+new Converter();
