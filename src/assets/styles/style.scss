@@ -47,9 +47,13 @@ header {
   font-weight: 700;
   height: var(--header-height);
   justify-content: space-between;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
   h1 {
     font-size: 1.5rem;
+  }
+  svg {
+    height: 1.5rem;
+    width: 1.5rem;
   }
 }
 
@@ -89,6 +93,10 @@ svg {
   display: flex;
 }
 
+.align-items-center {
+  align-items: center;
+}
+
 .flex-column {
   flex-direction: column;
 }
@@ -99,7 +107,7 @@ svg {
   display: flex;
   height: 60px;
   justify-content: space-between;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
 }
 
 .button-group {
