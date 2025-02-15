@@ -3,6 +3,7 @@
 
 :root {
   --primary-color: #{$primary-color};
+  --primary-soft-color: #{$primary-soft-color};
   --text-color: #{$text-color};
   --background-color: #{$background-color};
   --background-accent-color: #{$background-accent-color};
@@ -140,10 +141,10 @@ svg {
     }
   }
   .cm-activeLine {
-    background-color: rgba(var(--primary-color), 0.25);
+    background-color: var(--primary-soft-color);
   }
   .cm-activeLineGutter {
-    background-color: rgba(var(--primary-color), 0.25);
+    background-color: var(--primary-soft-color);
   }
   .cm-foldGutter {
     span {
@@ -161,7 +162,7 @@ svg {
     color: var(--text-color);
   }
   .cm-selectionBackground {
-    background-color: rgba(var(--primary-color), 0.25) !important;
+    background-color: var(--primary-soft-color) !important;
   }
   .cm-tooltip-lint {
     background-color: var(--background-accent-color);
