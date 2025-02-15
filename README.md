@@ -4,7 +4,7 @@ JSON2Markdown Converter is designed to convert JSON data into Markdown, making i
 
 # Demo
 
-[JSON2Markdown Converter](https://memochou1993.github.io/json2markdown-converter/)
+[JSON2Markdown Converter](https://memochou1993.github.io/json2markdown-converter/?view)
 
 # How It Works
 

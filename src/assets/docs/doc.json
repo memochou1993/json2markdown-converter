@@ -1,6 +1,6 @@
 {
   "json2markdown_converter": "JSON2Markdown Converter is designed to convert JSON data into Markdown, making it especially useful for providing a quick overview or for non-developers to read.",
-  "demo": "[JSON2Markdown Converter](https://memochou1993.github.io/json2markdown-converter/)",
+  "demo": "[JSON2Markdown Converter](https://memochou1993.github.io/json2markdown-converter/?view)",
   "how_it_works": "The conversion process begins by using the [json2markdown](https://github.com/memochou1993/json2markdown) package to parse the JSON data into Markdown, followed by using [markdown2html](https://github.com/memochou1993/markdown2html) to convert the Markdown into sanitized HTML.\n\nIn this process:\n\n- Objects are converted into headings and content.\n- Arrays are converted into lists.\n- Arrays of objects are converted into tables.\n- Markdown content is preserved.\n- HTML content is sanitized.\n\nThe following shows how different types of JSON data appear after being converted into Markdown.",
   "examples": {
     "json_object": {
