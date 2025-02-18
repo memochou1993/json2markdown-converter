@@ -15,7 +15,7 @@
     "@codemirror/lang-json": "^6.0.1",
     "@codemirror/lang-markdown": "^6.3.2",
     "@codemirror/theme-one-dark": "^6.1.2",
-    "@memochou1993/json2markdown": "^0.0.13",
+    "@memochou1993/json2markdown": "^0.0.14",
     "@memochou1993/markdown2html": "^0.0.1",
     "@memochou1993/stryle": "^0.0.5",
     "codemirror": "^6.0.1",
