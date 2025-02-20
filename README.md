@@ -12,11 +12,11 @@ The conversion process begins by using the [json2markdown](https://github.com/me
 
 In this process:
 
-- Objects are converted into headings and content.
+- Objects are converted into headings and paragraphs.
 - Arrays are converted into lists.
 - Arrays of objects are converted into tables.
 - Markdown content is preserved.
-- HTML content is sanitized.
+- HTML content is sanitized in the final stage.
 
 The following shows how different types of JSON data appear after being converted into Markdown.
 
