@@ -50,6 +50,9 @@ header {
   padding: 0 1.5rem;
   h1 {
     font-size: 1.5rem;
+    @media screen and (max-width: map.get($container-max-width, md)) {
+      font-size: 1rem;
+    }
   }
   svg {
     height: 1.5rem;
@@ -61,6 +64,7 @@ button,
 select {
   background-color: var(--background-color);
   border-radius: var(--border-radius);
+  border: var(--border-style);
   color: var(--text-color);
   cursor: pointer;
   height: 2rem;
