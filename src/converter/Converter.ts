@@ -2,7 +2,6 @@ import { html } from '@codemirror/lang-html';
 import { json, jsonParseLinter } from '@codemirror/lang-json';
 import { markdown } from '@codemirror/lang-markdown';
 import { linter } from '@codemirror/lint';
-import { EditorState } from '@codemirror/state';
 import { EditorView } from '@codemirror/view';
 import doc from '~/assets/docs/doc.json';
 import { RenderMode, ViewMode } from '~/constants';
@@ -121,7 +120,6 @@ class Converter {
       [
         html(),
         EditorView.lineWrapping,
-        EditorState.readOnly.of(true),
       ],
     );
   }
@@ -133,7 +131,6 @@ class Converter {
       [
         markdown(),
         EditorView.lineWrapping,
-        EditorState.readOnly.of(true),
       ],
     );
   }
